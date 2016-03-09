@@ -5,6 +5,7 @@ import processing.core.PApplet;
 /**
  * Created by asingh95 on 3/9/2016.
  */
+
 public class AccelPlot extends PApplet {
 
     Data[] plot1 = new Data[50];
