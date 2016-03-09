@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class LoginSQL extends AsyncTask<String, Void, String> {
+public class LoginSQL extends AsyncTask<String, Void, String[]> {
 
     private static final String POSTGRESS_DRIVER = "org.postgresql.Driver";
 
@@ -31,13 +31,13 @@ public class LoginSQL extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected String doInBackground(String... params) {
-        String retval = "";
+    protected String[] doInBackground(String... params) {
+        String retval[] = new String[2];
         try {
             Class.forName(POSTGRESS_DRIVER);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            retval = e.toString();
+            retval[0] = e.toString();
         }
         String url = "jdbc:postgresql://ec2-174-129-26-115.compute-1.amazonaws.com:5432/d4hp0ep351mjmr?user=mlcqisdxxxgoct&password=D1Cu5DZU0oi9Vy1L5QjY3WsbHU&ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
         Connection conn;
@@ -47,25 +47,25 @@ public class LoginSQL extends AsyncTask<String, Void, String> {
             Statement st = conn.createStatement();
             String sql;
             sql = params[0];//"SELECT * from \"dummyTable\" WHERE id=1";
-            password = params[1];
+            //password = params[1];
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()) {
                 //FOR SOME REASON THIS ADDS SOME WHITESPACE
-                retval = (rs.getString("password")).trim();
-                //int temp =
-                //retval = rs.getInt("dataVal");
+                retval[0] = (rs.getString("salt")).trim();
+                retval[1] = (rs.getString("password")).trim();
+
             }
             rs.close();
             st.close();
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            retval = e.toString();
+            retval[0] = e.toString();
         }
         return retval;
     }
     @Override
-    protected void onPostExecute(String value) {
+    protected void onPostExecute(String[] value) {
         //if there is no such id then it is empty
         /*
         //Log.d(LoginSQL.class.getSimpleName(), "got to post execute");

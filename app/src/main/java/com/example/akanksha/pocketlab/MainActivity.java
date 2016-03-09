@@ -11,7 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+
+import java.security.NoSuchAlgorithmException;
+import android.util.Log;
 import java.util.concurrent.ExecutionException;
+import java.security.SecureRandom;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -47,29 +53,127 @@ public class MainActivity extends ActionBarActivity {
                 LoginSQL s = new LoginSQL(resultArea);
                 String loginname = loginline.getText().toString().trim();
                 String password = passline.getText().toString().trim();
-                String value = "";
+                String value[] = new String[2];
 
-                if (loginname.equals("")){
-                    /*int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
-
-                    if (resultCode == ConnectionResult.SUCCESS){
-                        Toast.makeText(getApplicationContext(),
-                                "isGooglePlayServicesAvailable SUCCESS",
-                                Toast.LENGTH_LONG).show();
-                    }else{
-                        GooglePlayServicesUtil.getErrorDialog(resultCode, mSelf, 1);
-                        Toast.makeText(getApplicationContext(),
-                                String.valueOf(resultCode),
-                                Toast.LENGTH_LONG).show();
-                    }*/
+                if (loginname.equals("")) {
                     return;
                 }
-                if (password.equals("")){
+                if (password.equals("")) {
+                    return;
+                }
+
+                s.execute("SELECT * from login_info_pl WHERE loginname=\'" + loginname + "\'");
+
+                try {
+                    value = s.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                if (value[0].equals("")){
+                    resultArea.setText("Username does not exist");
+                    return;
+                }
+
+                password += value[0];
+
+                //hash password
+                MessageDigest md = null;
+                try {
+                    md = MessageDigest.getInstance("SHA-256");
+                }
+                catch(NoSuchAlgorithmException e){
+                    e.printStackTrace();
+                }
+
+                try{
+                    md.update(password.getBytes("UTF-16")); // Change this to "UTF-16" if needed
+                }
+                catch(UnsupportedEncodingException e){
+                    e.printStackTrace();
+                }
+
+                byte[] digest = md.digest();
+                String hashedpass = String.format("%064x", new java.math.BigInteger(1, digest));
+
+                if (value[1].equals("")) {
+                    resultArea.setText("Username does not exist");
+                } else if (!value[1].equals(hashedpass)) {
+                    resultArea.setText("Incorrect Password");
+                } else {
+                    resultArea.setText("Login Successful");
+                    currentUser = loginname;
+                    Intent intent = new Intent(mSelf, HomeScreen.class);
+                    startActivity(intent);
+                }
+            }
+
+        });
+
+        makeUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { //if they click on the Login button
+                //check that login isn't void
+                //verify that login is in database
+                NewUserSQL s = new NewUserSQL(resultArea);
+                String loginname = loginline.getText().toString();
+                String password = passline.getText().toString();
+                String value = "";
+                if (loginname.equals("") || password.equals(""))
+                {
+                    resultArea.setText("Please enter a username and a password.");
+                    return;
+                }
+                if(loginname.equals("None"))
+                {
+                    resultArea.setText("\'None\' is not a valid username.");
+                    return;
+                }
+                if(loginname.length() > 20)
+                {
+                    resultArea.setText("Username may not be more than 20 characters long.");
+                    return;
+                }
+                if(password.length() > 20)
+                {
+                    resultArea.setText("Password may not be more than 20 characters long.");
                     return;
                 }
                 //resultArea.setText(loginname);
-                s.execute("SELECT * from login_info WHERE username=\'"+loginname+"\'",password);
-                //Log.d(MainActivity.class.getSimpleName(), "success " + s.success);
+
+                //generate salt and add to password
+                SecureRandom random = null;
+                try {
+                    random = SecureRandom.getInstance("SHA1PRNG");
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                int saltvalue = random.nextInt();
+                String saltstr = Integer.toString(saltvalue);
+                password += saltstr;
+
+                //hash password
+                MessageDigest md = null;
+                try {
+                    md = MessageDigest.getInstance("SHA-256");
+                }
+                catch(NoSuchAlgorithmException e){
+                    e.printStackTrace();
+                }
+
+                try{
+                    md.update(password.getBytes("UTF-16")); // Change this to "UTF-16" if needed
+                }
+                catch(UnsupportedEncodingException e){
+                    e.printStackTrace();
+                }
+
+                byte[] digest = md.digest();
+                String hashedpass = String.format("%064x", new java.math.BigInteger(1, digest));
+
+                s.execute("INSERT INTO login_info_pl VALUES (\'"+loginname+"\',\'"+saltstr+"\',\'"+hashedpass+"\')",loginname);
 
                 try
                 {
@@ -82,23 +186,24 @@ public class MainActivity extends ActionBarActivity {
                     e.printStackTrace();
                 }
 
-                if(value.equals(""))
+                if(value.equals("exists"))
                 {
-                    resultArea.setText("Username does not exist");
+                    resultArea.setText("Username already exists");
                 }
-                else if (!value.equals(password))
+                else if (value.equals("failed to add"))
                 {
-                    resultArea.setText("Incorrect Password");
+                    resultArea.setText("Re-try");
                 }
                 else
                 {
-                    resultArea.setText("Login Successful");
+                    resultArea.setText("Account created!");
                     currentUser = loginname;
                     Intent intent = new Intent(mSelf, HomeScreen.class);
                     startActivity(intent);
-                }
+                };
+                /*Intent intent = new Intent(mSelf, SecondActivity.class);
+                startActivity(intent);*/
             }
-
         });
     }
 
