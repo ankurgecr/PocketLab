@@ -21,6 +21,69 @@ public class CameraActivity extends ActionBarActivity {
     private boolean whiteBalanceLocked = false;
 
     @Override
+    protected void onStart(){
+        super.onStart();
+        try{
+            mCamera = Camera.open();//you can use open(int) to use different cameras
+        } catch (Exception e){
+            Log.d("ERROR", "Failed to get camera: " + e.getMessage());
+        }
+        //final Camera.Parameters p = camera.getParameters();
+        //SurfaceView preview = (SurfaceView)findViewById(R.id.PREVIEW);
+        //SurfaceHolder mHolder = preview.getHolder();
+        //mHolder.addCallback(this);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        try {
+            try {
+                mCamera = Camera.open();//you can use open(int) to use different cameras
+            } catch (Exception e) {
+                Log.d("ERROR", "Failed to get camera: " + e.getMessage());
+            }
+            //mCamera.setPreviewCallback(null);
+
+        } catch (Exception e) {
+            Log.d("ERROR", "Failed to get camera: " + e.getMessage());
+        }
+    }
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try
+        {
+            mCamera.stopPreview();
+            mCamera.setPreviewCallback(null);
+            mCamera.release();
+            mCamera = null;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+
+        if(mCamera!=null){
+            mCamera.stopPreview();
+            mCamera.setPreviewCallback(null);
+            mCamera.release();
+            mCamera = null;
+        }
+    }
+
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);

@@ -31,6 +31,11 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback{
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         try{
             //when the surface is created, we can set the camera to draw images in this surfaceholder
+            try {
+                mCamera = Camera.open();//you can use open(int) to use different cameras
+            } catch (Exception e) {
+                Log.d("ERROR", "Failed to get camera: " + e.getMessage());
+            }
             mCamera.setPreviewDisplay(surfaceHolder);
             mCamera.startPreview();
         } catch (IOException e) {
@@ -74,7 +79,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback{
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         //our app has only one screen, so we'll destroy the camera in the surface
         //if you are using with more screens, please move this code your activity
-        mCamera.stopPreview();
-        mCamera.release();
+        //mCamera.stopPreview();
+        //mCamera.release();
     }
 }
