@@ -45,7 +45,8 @@ public class AccelPlot extends PApplet {
     {
         strokeWeight(1);
         fill(255);
-        rect(100, 50, (float)grid_w, (float)grid_h);
+        rectMode(CENTER);
+        rect(500, 680, (float)grid_w, (float)grid_h);
     }
 
     void GetData()
@@ -100,7 +101,8 @@ public class AccelPlot extends PApplet {
         {
             stroke(255,0,0);
             fill(0);
-            ellipse(xpos, ypos, 5, 5);
+
+            ellipse(xpos+((float)grid_w/2), ypos, 5, 5);
         }//display()
 
         void fillGraph()
