@@ -1,6 +1,8 @@
 package com.example.akanksha.pocketlab;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,6 +14,11 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment fragment = new SplashLogo();
+        fragmentManager.beginTransaction()
+                .replace(R.id.splash_screen, fragment)
+                .commit();
 
         Thread timerThread = new Thread(){
             public void run(){
