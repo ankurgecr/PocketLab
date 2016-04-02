@@ -31,7 +31,8 @@ public class NewExperiment extends ActionBarActivity {
         temperatureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(newExpSelf, TemperatureSensor.class);
+                //Intent intent = new Intent(newExpSelf, TemperatureSensor.class);
+                Intent intent = new Intent(newExpSelf, TemperatureSensorBoard.class);
                 startActivity(intent);
             }
         });
