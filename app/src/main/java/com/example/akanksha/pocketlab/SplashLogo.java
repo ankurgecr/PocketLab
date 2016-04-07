@@ -18,14 +18,14 @@ public class SplashLogo extends PApplet {
     @Override
     public void settings()
     {
-        size(500,500);
+        size(width-100, width-100);
     }
 
     @Override
     public void setup()
     {
         background(29, 65, 115);
-        myFont = createFont("Agency FB Bold",50);
+        myFont = createFont("Agency FB Bold",width/10);
         EmptyTestTubes();
     }
 
@@ -122,4 +122,6 @@ public class SplashLogo extends PApplet {
         fill(g,h,j,a);
         text("PocketLab",width/2,height/5);
     }//Logo()
+
+
 }
