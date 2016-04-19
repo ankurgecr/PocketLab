@@ -23,11 +23,12 @@ public class CameraActivity extends ActionBarActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        try{
+        /*try{
             mCamera = Camera.open();//you can use open(int) to use different cameras
+            Log.d("onStart", "Got Camera");
         } catch (Exception e){
             Log.d("ERROR", "Failed to get camera: " + e.getMessage());
-        }
+        }*/
         //final Camera.Parameters p = camera.getParameters();
         //SurfaceView preview = (SurfaceView)findViewById(R.id.PREVIEW);
         //SurfaceHolder mHolder = preview.getHolder();
@@ -38,17 +39,18 @@ public class CameraActivity extends ActionBarActivity {
     protected void onResume()
     {
         super.onResume();
-        try {
+        //try {
             try {
                 mCamera = Camera.open();//you can use open(int) to use different cameras
+                Log.d("onResume", "Got Camera");
             } catch (Exception e) {
                 Log.d("ERROR", "Failed to get camera: " + e.getMessage());
             }
             //mCamera.setPreviewCallback(null);
 
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             Log.d("ERROR", "Failed to get camera: " + e.getMessage());
-        }
+        }*/
     }
 
 
@@ -58,10 +60,12 @@ public class CameraActivity extends ActionBarActivity {
         super.onPause();
         try
         {
+            //mCamera.stopPreview();
+            //mCamera.setPreviewCallback(null);
             mCamera.stopPreview();
-            mCamera.setPreviewCallback(null);
             mCamera.release();
             mCamera = null;
+            Log.d("OnPause", "Released Camera");
         }
         catch(Exception e)
         {
@@ -73,12 +77,12 @@ public class CameraActivity extends ActionBarActivity {
     protected void onStop(){
         super.onStop();
 
-        if(mCamera!=null){
+        /*if(mCamera!=null){
             mCamera.stopPreview();
             mCamera.setPreviewCallback(null);
             mCamera.release();
             mCamera = null;
-        }
+        }*/
     }
 
 
@@ -90,6 +94,7 @@ public class CameraActivity extends ActionBarActivity {
 
         try{
             mCamera = Camera.open();//you can use open(int) to use different cameras
+            Log.d("onCreate", "Got Camera");
         } catch (Exception e){
             Log.d("ERROR", "Failed to get camera: " + e.getMessage());
         }
