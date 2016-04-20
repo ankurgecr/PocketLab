@@ -80,7 +80,7 @@ public class HomeScreen extends ActionBarActivity {
                             dialog.setMessage("Too long, must not exceed 40 characters");
                         }
                         if (exp.equals("")) {
-                            dialog.setMessage("Experiment must have a name");
+                            dialog.setMessage("Experiment must have a name ");
                         }
                         else{
                             NewExperimentSQL s = new NewExperimentSQL();
