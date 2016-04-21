@@ -104,52 +104,59 @@ public class TemperatureSensorBoard extends AbstractIOIOActivity implements OnCh
          */
         @Override
         protected void loop() throws ConnectionLostException {
-            try {
-                float v = inputPin_.getVoltage();
-                float voltsPerDegree = 0.02f;
-                String units = "C";
-                //float temp = (v - 0.5f) * 100.0f;
-                float temp = v  / voltsPerDegree;
-                //float temp = v;
-                if (radioF_.isChecked()) {
-                    //temp = temp * 9.0f / 5.0f + 32.0f;
-                    temp = ((v / voltsPerDegree)  * 9.0f / 5.0f) + 32;
-                    units = "F";
+            int avgtemp = 0;
+            int divisor = 0;
+            String units = "";
+            for (int i = 0; i < 30; i++) {
+                try {
+                    float v = inputPin_.getVoltage();
+                    float voltsPerDegree = 0.02f;
+                    units = "C";
+                    //float temp = (v - 0.5f) * 100.0f;
+                    float temp = v / voltsPerDegree;
+                    //float temp = v;
+                    if (radioF_.isChecked()) {
+                        //temp = temp * 9.0f / 5.0f + 32.0f;
+                        temp = ((v / voltsPerDegree) * 9.0f / 5.0f) + 32;
+                        units = "F";
+                    }
+                    // round to 1 dp
+                    temp = Math.round(temp * 10) / 10.0f;
+                    updateTempField(temp, units);
+                    long now = System.currentTimeMillis();
+                    if (now > lastSampleTime_ + SAMPLE_PERIOD) {
+                        avgtemp += temp;
+                        divisor++;
+                        lastSampleTime_ = now;
+                    }
+                    sleep(100);
+                } catch (Exception e) {
+                    toast(e.getMessage());
                 }
-                // round to 1 dp
-                temp = Math.round(temp * 10) / 10.0f;
-                updateTempField(temp, units);
-                long now = System.currentTimeMillis();
-                if (now > lastSampleTime_ + SAMPLE_PERIOD) {
-                    logTemp(temp, units);
-                    lastSampleTime_ = now;
-                }
-                sleep(100);
-            } catch (Exception e) {
-                toast(e.getMessage());
             }
+            logTemp(avgtemp/divisor,units);
         }
 
         private void logTemp(float temp, String units) {
-            if (logButton_.isChecked()) {
+            /*if (logButton_.isChecked()) {
                 Date now = new Date();
                 String filename = "temp_" + DateFormat.format("yyyy_MM_dd", now).toString() + ".csv";
                 CharSequence time = DateFormat.format("hh:mm:ss", now);
                 String line = "" + time + ", " + temp + ", " + units + "\n";
                 updateLastLogLine(line);
                 appendToFile(filename, line);
-            }
+            }*/
         }
 
         private void appendToFile(String filename, String line) {
-            File root = Environment.getExternalStorageDirectory();
+            /*File root = Environment.getExternalStorageDirectory();
             try {
                 FileOutputStream f = new FileOutputStream(new File(root, filename), true);
                 f.write(line.getBytes());
                 f.close();
             } catch (Exception e) {
                 toast(e.getMessage());
-            }
+            }*/
         }
     }
 

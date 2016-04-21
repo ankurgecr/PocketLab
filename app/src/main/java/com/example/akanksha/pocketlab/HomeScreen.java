@@ -85,7 +85,14 @@ public class HomeScreen extends ActionBarActivity {
                         else{
                             NewExperimentSQL s = new NewExperimentSQL();
                             s.execute(MainActivity.currentUser, exp);
-                            String result = "Works";//s.get();
+                            String result = null;
+                            try {
+                                result = s.get();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            }
 
                             if (result.equals("Works")) {
                                 dialog.dismiss();

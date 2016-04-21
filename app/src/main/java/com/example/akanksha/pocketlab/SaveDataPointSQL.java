@@ -1,7 +1,10 @@
 package com.example.akanksha.pocketlab;
 
+/**
+ * Created by melissaregalia on 4/20/16.
+ */
+
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.TextView;
 
 import java.sql.Connection;
@@ -10,19 +13,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
 /**
  * Created by melissaregalia on 4/20/16.
  */
-public class NewExperimentSQL extends AsyncTask<String, Void, String> {
+public class SaveDataPointSQL extends AsyncTask<String, Void, String> {
     private static final String POSTGRESS_DRIVER = "org.postgresql.Driver";
 
     TextView resultArea;
     String mQuery;
     String loginname;
+    Long timestamp;
 
     //here is the intialization arguments - pass in a textview to initialize it
     //make this an error slot
-    public NewExperimentSQL() {
+    public SaveDataPointSQL(long time) {
+        timestamp = time;
     }
 
     @Override
@@ -40,23 +46,36 @@ public class NewExperimentSQL extends AsyncTask<String, Void, String> {
             DriverManager.setLoginTimeout(5);
             conn = DriverManager.getConnection(url);
             Statement st = conn.createStatement();
-            String user, expname,recievedstring = "", sql, sqlcheck;
+            String user, expname,recievedstring = "", sql, sqlcheck, columnname, newval = "", datastring;
             user = params[0]; //string for inserting into table
             expname = params[1];
-            long time = System.currentTimeMillis();
+            columnname = params[2];
+            datastring = params[3];
 
-            sql = "INSERT INTO expdata VALUES (\'"+user+"\',"+time+",\'"+expname+"\',\'\',\'\',\'\',\'\')";
-            sqlcheck = "SELECT * from expdata WHERE username =\'" + user + "\' AND timestamp =" + time;
-            Log.d("DEBUG", sql);            //add the new experiment
-            Log.d("DEBUG", sqlcheck);
-            st.executeUpdate(sql);
-            //now check and verify that it was added
+            //gets the existing value for the column, appends a data point, updates the column, and then verifies update
+
+            sqlcheck = "SELECT * from expdata WHERE user =\'" + user + "\' AND timestamp =" + timestamp;
+
+            //get existing value
             ResultSet rs = st.executeQuery(sqlcheck);
+
             while (rs.next()){
-                recievedstring = (rs.getString("expname")).trim();
+                newval = (rs.getString(columnname)).trim();
+            }
+            //append new data point
+            newval += ","+datastring;
+
+            //save new value
+            sql = "UPDATE expdata SET " + columnname + "=" + newval + " WHERE user =\'" + user + "\' AND timestamp =" + timestamp;
+            st.executeUpdate(sql);
+
+            //check to see if added
+            rs = st.executeQuery(sqlcheck);
+            while (rs.next()){
+                recievedstring = (rs.getString(columnname)).trim();
             }
             //if failed to add
-            if(!recievedstring.equals(expname)){
+            if(!recievedstring.equals(newval)){
                 st.close();
                 conn.close();
                 return "failed to add";
