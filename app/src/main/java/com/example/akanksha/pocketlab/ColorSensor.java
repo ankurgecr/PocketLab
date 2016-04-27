@@ -2,6 +2,7 @@ package com.example.akanksha.pocketlab;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,11 +25,14 @@ import java.util.Date;
 
 public class ColorSensor extends ActionBarActivity {
 
+    static int REQUEST_IMAGE_CAPTURE = 1;
+
     Button captureButton;
     Activity colorSensorSelf = this;
     //private Camera mCamera = null;
     private CameraView mCameraView = null;
     private String mCurrentPhotoPath;
+    File photoFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,7 @@ public class ColorSensor extends ActionBarActivity {
 
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                 if (intent.resolveActivity(getPackageManager()) != null) {
-                    File photoFile = null;
+                    //File photoFile = null;
 
                     try{
                         photoFile = createImageFile();
@@ -55,10 +60,8 @@ public class ColorSensor extends ActionBarActivity {
                     if(photoFile != null)
                     {
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-                        startActivityForResult(intent,1);
+                        startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
                     }
-
-                    startActivityForResult(intent, 1);
                 }
 
 
@@ -102,5 +105,21 @@ public class ColorSensor extends ActionBarActivity {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
+        {
+            //Bitmap photo = (Bitmap) data.getExtras().get("output");
+            Uri imgUri = Uri.fromFile(photoFile);
+            //Toast.makeText(this,data.getExtras().get("data").toString(),Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(colorSensorSelf, PhotoView.class);
+            intent.putExtra("imgUri",imgUri.toString());
+            startActivity(intent);
+        }
     }
 }

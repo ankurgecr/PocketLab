@@ -12,4 +12,5 @@
     <string name="title_activity_humidity_sensor">HumiditySensor</string>
     <string name="title_activity_accel_sensor">AccelSensor</string>
     <string name="title_activity_camera">CameraActivity</string>
+    <string name="title_activity_photo_view">PhotoView</string>
 </resources>
