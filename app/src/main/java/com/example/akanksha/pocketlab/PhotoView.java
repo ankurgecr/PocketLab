@@ -53,7 +53,7 @@ public class PhotoView extends Activity {
             matrix.postRotate(90);
 
             Bitmap resizedBitmap = Bitmap.createBitmap(photoBitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setImageBitmap(resizedBitmap);
         }
         catch(IOException e)
