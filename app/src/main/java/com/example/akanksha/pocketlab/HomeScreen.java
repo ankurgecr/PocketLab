@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 
 public class HomeScreen extends ActionBarActivity {
     Button newExpButton;
+    Button existingExpButton;
     Activity mSelf = this;
 
     @Override
@@ -25,6 +26,7 @@ public class HomeScreen extends ActionBarActivity {
         setContentView(R.layout.activity_home_screen);
 
         newExpButton = (Button) findViewById(R.id.new_experiment_button);
+        existingExpButton = (Button) findViewById(R.id.exisiting_experiment_button);
 
         /*newExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +114,23 @@ public class HomeScreen extends ActionBarActivity {
                         }
                     }
                 });
+            }
+        });
+
+        existingExpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CharSequence colors[] = new CharSequence[] {"red", "green", "blue", "black","a","b","c","d","e","f","g","h","i","j","k"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(mSelf);
+                builder.setTitle("Pick a color");
+                builder.setItems(colors, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // the user clicked on colors[which]
+                    }
+                });
+                builder.show();
             }
         });
     }

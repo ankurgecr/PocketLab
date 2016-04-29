@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import android.util.Log;
 
 
 /**
@@ -46,15 +47,15 @@ public class SaveDataPointSQL extends AsyncTask<String, Void, String> {
             DriverManager.setLoginTimeout(5);
             conn = DriverManager.getConnection(url);
             Statement st = conn.createStatement();
-            String user, expname,recievedstring = "", sql, sqlcheck, columnname, newval = "", datastring;
+            String user, recievedstring = "", sql, sqlcheck, columnname, newval = "", datastring;
             user = params[0]; //string for inserting into table
-            expname = params[1];
-            columnname = params[2];
-            datastring = params[3];
+            columnname = params[1];
+            datastring = params[2];
 
             //gets the existing value for the column, appends a data point, updates the column, and then verifies update
 
-            sqlcheck = "SELECT * from expdata WHERE user =\'" + user + "\' AND timestamp =" + timestamp;
+            sqlcheck = "SELECT * from expdata WHERE username =\'" + user + "\' AND timestamp =" + timestamp;
+            Log.d("DEBUG",sqlcheck);
 
             //get existing value
             ResultSet rs = st.executeQuery(sqlcheck);
@@ -63,10 +64,12 @@ public class SaveDataPointSQL extends AsyncTask<String, Void, String> {
                 newval = (rs.getString(columnname)).trim();
             }
             //append new data point
-            newval += ","+datastring;
+            newval += datastring;
+
 
             //save new value
-            sql = "UPDATE expdata SET " + columnname + "=" + newval + " WHERE user =\'" + user + "\' AND timestamp =" + timestamp;
+            sql = "UPDATE expdata SET " + columnname + "=\'" + newval + "\' WHERE username =\'" + user + "\' AND timestamp =" + timestamp;
+            Log.d("DEBUG",sql);
             st.executeUpdate(sql);
 
             //check to see if added

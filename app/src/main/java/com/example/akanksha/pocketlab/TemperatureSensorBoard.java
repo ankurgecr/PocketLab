@@ -19,6 +19,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
+import android.util.Log;
+
 import ioio.lib.api.AnalogInput;
 import ioio.lib.api.DigitalOutput;
 import ioio.lib.api.DigitalOutput.Spec.Mode;
@@ -104,8 +107,8 @@ public class TemperatureSensorBoard extends AbstractIOIOActivity implements OnCh
          */
         @Override
         protected void loop() throws ConnectionLostException {
-            int avgtemp = 0;
-            int divisor = 0;
+            float avgtemp = 0;
+            float divisor = 0;
             String units = "";
             for (int i = 0; i < 30; i++) {
                 try {
@@ -122,19 +125,23 @@ public class TemperatureSensorBoard extends AbstractIOIOActivity implements OnCh
                     }
                     // round to 1 dp
                     temp = Math.round(temp * 10) / 10.0f;
-                    updateTempField(temp, units);
-                    long now = System.currentTimeMillis();
+                    //updateTempField(temp, units);
+                    /*long now = System.currentTimeMillis();
                     if (now > lastSampleTime_ + SAMPLE_PERIOD) {
-                        avgtemp += temp;
-                        divisor++;
                         lastSampleTime_ = now;
-                    }
+                        //updateTempField(temp,units);
+                    }*/
+                    avgtemp += temp;
+                    divisor++;
                     sleep(100);
                 } catch (Exception e) {
                     toast(e.getMessage());
                 }
             }
-            logTemp(avgtemp/divisor,units);
+            if (divisor >= 25) {
+                updateTempField(avgtemp / divisor, units);
+                logTemp(avgtemp / divisor, units);
+            }
         }
 
         private void logTemp(float temp, String units) {
@@ -146,6 +153,19 @@ public class TemperatureSensorBoard extends AbstractIOIOActivity implements OnCh
                 updateLastLogLine(line);
                 appendToFile(filename, line);
             }*/
+            Long temptime =  System.currentTimeMillis();
+            String newdatastr = temptime + ":" + temp + ":" + units + ";";
+            SaveDataPointSQL s = new SaveDataPointSQL(MainActivity.exptime);
+            s.execute(MainActivity.currentUser, "temperature",newdatastr);
+            try {
+                if (s.get() == "Works"){
+                    Log.d("DEBUG","Saved new temp");
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         }
 
         private void appendToFile(String filename, String line) {
@@ -157,6 +177,7 @@ public class TemperatureSensorBoard extends AbstractIOIOActivity implements OnCh
             } catch (Exception e) {
                 toast(e.getMessage());
             }*/
+            return;
         }
     }
 

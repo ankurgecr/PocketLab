@@ -62,6 +62,7 @@ public class NewExperimentSQL extends AsyncTask<String, Void, String> {
                 return "failed to add";
             }
             //if added correctly
+            MainActivity.exptime = time;
             retval = "Works";
             st.close();
             conn.close();

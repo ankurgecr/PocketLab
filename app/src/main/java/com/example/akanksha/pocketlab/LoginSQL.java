@@ -33,6 +33,8 @@ public class LoginSQL extends AsyncTask<String, Void, String[]> {
     @Override
     protected String[] doInBackground(String... params) {
         String retval[] = new String[2];
+        retval[0] = "";
+        retval[1] = "";
         try {
             Class.forName(POSTGRESS_DRIVER);
         } catch (ClassNotFoundException e) {
