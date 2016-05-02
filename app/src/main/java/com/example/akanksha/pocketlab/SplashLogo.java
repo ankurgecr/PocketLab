@@ -24,18 +24,18 @@ public class SplashLogo extends PApplet {
     @Override
     public void setup()
     {
-        background(29, 65, 115);
-        myFont = createFont("Agency FB Bold",width/10);
+        background(11, 34, 127);
+        myFont = createFont("Georgia",width/10);
         EmptyTestTubes();
     }
 
     @Override
     public void draw()
     {
-        frameRate(50);
+        frameRate(100);
         if(a<256 && x<256 && y<256 && z>=0)
         {
-            Logo(x,y,z);
+            Logo(0, y - 65, z - 171);
             TestTubes(a,x,y,z);
             a++;
             x++;
@@ -99,10 +99,10 @@ public class SplashLogo extends PApplet {
         //left side test tube
 
         noStroke();
-        fill(0,r,s-100,Aop);
+        fill(q,r-100,s,Aop);
         arc((width/2), p_y+(tubeH+50),tubeW,tubeW,0,PI);
         noStroke();
-        fill(0,r,s-100,Aop);
+        fill(q,r-100,s,Aop);
         rect((width/2)-tubeWSemi,p_y+((tubeH+50)/5),tubeW,(tubeH+50)-((tubeH+50)/5));
         //center test tube
 

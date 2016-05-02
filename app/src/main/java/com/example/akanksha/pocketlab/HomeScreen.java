@@ -17,7 +17,6 @@ import java.util.concurrent.ExecutionException;
 
 public class HomeScreen extends ActionBarActivity {
     Button newExpButton;
-    Button existingExpButton;
     Activity mSelf = this;
 
     @Override
@@ -26,7 +25,6 @@ public class HomeScreen extends ActionBarActivity {
         setContentView(R.layout.activity_home_screen);
 
         newExpButton = (Button) findViewById(R.id.new_experiment_button);
-        existingExpButton = (Button) findViewById(R.id.exisiting_experiment_button);
 
         /*newExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,19 +80,12 @@ public class HomeScreen extends ActionBarActivity {
                             dialog.setMessage("Too long, must not exceed 40 characters");
                         }
                         if (exp.equals("")) {
-                            dialog.setMessage("Experiment must have a name");
+                            dialog.setMessage("Experiment must have a name ");
                         }
                         else{
                             NewExperimentSQL s = new NewExperimentSQL();
                             s.execute(MainActivity.currentUser, exp);
-                            String result = null;
-                            try {
-                                result = s.get();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } catch (ExecutionException e) {
-                                e.printStackTrace();
-                            }
+                            String result = "Works";//s.get();
 
                             if (result.equals("Works")) {
                                 dialog.dismiss();
@@ -114,23 +105,6 @@ public class HomeScreen extends ActionBarActivity {
                         }
                     }
                 });
-            }
-        });
-
-        existingExpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CharSequence colors[] = new CharSequence[] {"red", "green", "blue", "black","a","b","c","d","e","f","g","h","i","j","k"};
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(mSelf);
-                builder.setTitle("Pick a color");
-                builder.setItems(colors, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // the user clicked on colors[which]
-                    }
-                });
-                builder.show();
             }
         });
     }

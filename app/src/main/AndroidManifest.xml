@@ -81,6 +81,10 @@
             android:name=".TemperatureSensorBoard"
             android:label="@string/title_activity_temperature_sensor_board" >
         </activity>
+        <activity
+            android:name=".AmbientSensor"
+            android:label="@string/title_activity_ambient_sensor">
+        </activity>
     </application>
 
 </manifest>

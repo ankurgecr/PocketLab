@@ -13,4 +13,5 @@
     <string name="title_activity_accel_sensor">AccelSensor</string>
     <string name="title_activity_camera">CameraActivity</string>
     <string name="title_activity_temperature_sensor_board">TemperatureSensorBoard</string>
+    <string name="title_activity_ambient_sensor">AmbientSensor</string>
 </resources>

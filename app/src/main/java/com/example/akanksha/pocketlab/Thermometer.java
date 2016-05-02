@@ -1,6 +1,7 @@
 package com.example.akanksha.pocketlab;
 
 import processing.core.PApplet;
+import processing.core.PFont;
 
 /**
  * Created by asingh95 on 3/9/2016.
@@ -8,22 +9,25 @@ import processing.core.PApplet;
 public class Thermometer extends PApplet {
 
     int j = 0;
-    int degree = 50;
+    int degree = 75;
+
+    PFont font;
 
     @Override
     public void settings()
     {
-        size(1000,1280);
+        size(1000, 1280);
     }
 
     @Override
     public void setup()
     {
-        background(200);
+        background(29, 65, 115);
         thermoScale();
-        // font = loadFont("ArialNarrow-Bold-32.vlw");
-        // textFont(font);
+        font = createFont("sans-serif-light",22);
+        textFont(font);
         drawTempMarker();
+
     }
 
     @Override
@@ -37,6 +41,8 @@ public class Thermometer extends PApplet {
             temperatureInc(j);
             j++;
         }//if
+
+        displaydegree(degree);
     }
 
     void thermoScale()
@@ -66,28 +72,49 @@ public class Thermometer extends PApplet {
 
     void drawTempMarker()
     {
+        textAlign(RIGHT);
+        textSize(44);
+        fill(255,255,73);
+        text("Farenheit", 400, 200);
 
         for(int a = 0; a < 6; a++)
         {
             strokeWeight(4);
-            stroke(0);
-            line(440, 810-(a*100), 410, 810-(a*100));
+            stroke(255);
+            line(440, 810 - (a * 100), 410, 810 - (a*100));
 
+            textAlign(RIGHT);
+            textSize(32);
+            fill(0,255,255);
+            text(a * 20, 400, 810 - (a * 100));
         }//for
 
         for(int a = 0; a < 5; a++)
         {
             strokeWeight(2);
-            stroke(0);
-            line(440, 760-(a*100), 420, 760-(a*100));
+            stroke(255);
+            line(440, 760 - (a * 100), 420, 760 - (a*100));
+
+            textAlign(RIGHT);
+            textSize(26);
+            fill(255);
+            text((a * 20) + 10, 415, 760 - (a*100));
 
         }//for
 
         for(int a = 0; a <10; a++)
         {
             strokeWeight(1);
-            stroke(0);
+            stroke(255);
             line(440, 785-(a*50), 430, 785-(a*50));
         }//for
     }//drawTempMarker()
+
+    void displaydegree(int deg)
+    {
+        textAlign(LEFT);
+        textSize(44);
+        fill(255);
+        text(deg+" degrees",2*(width/3),200);
+    }//displaydegree()
 }
