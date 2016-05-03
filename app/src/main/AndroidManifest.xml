@@ -79,7 +79,8 @@
         </activity>
         <activity
             android:name=".PhotoView"
-            android:label="@string/title_activity_photo_view" >
+            android:label="@string/title_activity_photo_view"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 
