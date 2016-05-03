@@ -27,7 +27,10 @@ public class PhotoView extends Activity {
     DrawView imageView;
     //ImageView imageView;
     //TextView textView;
-    boolean isImageFitToScreen;
+    //boolean isImageFitToScreen;
+    Bitmap bm;
+    int windowHeight;
+    int windowWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +51,8 @@ public class PhotoView extends Activity {
 
             Point size = new Point();
             getWindowManager().getDefaultDisplay().getSize(size);
-            int windowHeight = size.y;
-            int windowWidth = size.x;
+            windowHeight = size.y;
+            windowWidth = size.x;
 
             float scaleHeight = ((float) windowHeight/bitmapHeight);
             float scaleWidth = ((float) windowWidth/bitmapWidth);
@@ -59,9 +62,9 @@ public class PhotoView extends Activity {
             //matrix.postScale(1,1);
             matrix.postRotate(90);
 
-            Bitmap resizedBitmap = Bitmap.createBitmap(photoBitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+            bm = Bitmap.createBitmap(photoBitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setImageBitmap(resizedBitmap);
+            imageView.setImageBitmap(bm);
 
             long reds = 0;
             long greens = 0;
@@ -73,7 +76,7 @@ public class PhotoView extends Activity {
                 for(int j = 0; j < windowHeight; j++)
                 {
                     numPixels++;
-                    int c = resizedBitmap.getPixel(i,j);
+                    int c = bm.getPixel(i,j);
                     reds += Color.red(c);
                     greens += Color.green(c);
                     blues += Color.blue(c);
@@ -101,6 +104,21 @@ public class PhotoView extends Activity {
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         }
         */
+    }
+
+    public Bitmap getBitmap()
+    {
+        return bm;
+    }
+
+    public int getWindowHeight()
+    {
+        return windowHeight;
+    }
+
+    public int getWindowWidth()
+    {
+        return windowWidth;
     }
 
     /*

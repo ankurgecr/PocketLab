@@ -11,9 +11,13 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.lang.Math;
 
 /**
  * Created by Akanksha on 4/26/2016.
@@ -24,6 +28,8 @@ import android.widget.ImageView;
 public class DrawView extends ImageView {
 
     Point[] points = new Point[4];
+    double[] colorsRGB = new double[3];
+    PhotoView myContext;
 
     /**
      * point1 and point 3 are of same group and same as point 2 and point4
@@ -41,10 +47,12 @@ public class DrawView extends ImageView {
         paint = new Paint();
         setFocusable(true); // necessary for getting the touch events
         canvas = new Canvas();
+        myContext = (PhotoView) this.getContext();
     }
 
     public DrawView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        myContext = (PhotoView) this.getContext();
     }
 
     public DrawView(Context context, AttributeSet attrs) {
@@ -52,6 +60,7 @@ public class DrawView extends ImageView {
         paint = new Paint();
         setFocusable(true); // necessary for getting the touch events
         canvas = new Canvas();
+        myContext = (PhotoView) this.getContext();
     }
 
     // the method that draws the balls
@@ -79,7 +88,7 @@ public class DrawView extends ImageView {
 
         //draw stroke
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.parseColor("#AA00D8FF"));
+        paint.setColor(Color.parseColor("#AAFFFFFF"));
         paint.setStrokeWidth(2);
         canvas.drawRect(
                 left + colorballs.get(0).getWidthOfBall() / 2,
@@ -87,15 +96,15 @@ public class DrawView extends ImageView {
                 right + colorballs.get(2).getWidthOfBall() / 2,
                 bottom + colorballs.get(2).getWidthOfBall() / 2, paint);
         //fill the rectangle
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.parseColor("#5500D8FF"));
+        /*paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.parseColor("#11FFFFFF"));
         paint.setStrokeWidth(0);
         canvas.drawRect(
                 left + colorballs.get(0).getWidthOfBall() / 2,
                 top + colorballs.get(0).getWidthOfBall() / 2,
                 right + colorballs.get(2).getWidthOfBall() / 2,
                 bottom + colorballs.get(2).getWidthOfBall() / 2, paint);
-
+        */
         //draw the corners
         BitmapDrawable bitmap = new BitmapDrawable();
         // draw the balls on the canvas
@@ -107,7 +116,7 @@ public class DrawView extends ImageView {
             canvas.drawBitmap(ball.getBitmap(), ball.getX(), ball.getY(),
                     paint);
 
-            //canvas.drawText("" + (i+1), ball.getX(), ball.getY(), paint);
+            //canvas.drawText("" + (i), ball.getX(), ball.getY(), paint);
         }
     }
 
@@ -182,8 +191,17 @@ public class DrawView extends ImageView {
             case MotionEvent.ACTION_MOVE: // touch drag with the ball
 
 
-                if (balID > -1) {
+                if (balID > -1 && balID < 4) {
                     // move the balls the same as the finger
+                    if(X >= myContext.getWindowWidth()-5)
+                    {
+                        X = myContext.getWindowWidth()-5;
+                    }
+                    if(Y >= myContext.getWindowHeight()-5)
+                    {
+                        Y = myContext.getWindowHeight()-5;
+                    }
+
                     colorballs.get(balID).setX(X);
                     colorballs.get(balID).setY(Y);
 
@@ -206,7 +224,52 @@ public class DrawView extends ImageView {
                 break;
 
             case MotionEvent.ACTION_UP:
-                // touch drop - just do things here after dropping
+                long reds = 0;
+                long greens = 0;
+                long blues = 0;
+
+                //int boxWidth = Math.abs(colorballs.get(2).getX() - colorballs.get(1).getX());
+                //int boxHeight = Math.abs(colorballs.get(1).getY()-colorballs.get(0).getY());
+
+                int startX = Math.min(colorballs.get(2).getX(), colorballs.get(1).getX());
+                int startY = Math.min(colorballs.get(1).getY(), colorballs.get(0).getY());
+                int endX = Math.max(colorballs.get(2).getX(), colorballs.get(1).getX());
+                int endY = Math.max(colorballs.get(1).getY(), colorballs.get(0).getY());
+
+                if(startX < 0)
+                {
+                    startX = 0;
+                }
+                if(startY < 0)
+                {
+                    startY = 0;
+                }
+                if(endX > myContext.getWindowWidth())
+                {
+                    endX = myContext.getWindowWidth()-1;
+                }
+                if(endY > myContext.getWindowHeight())
+                {
+                    endY = myContext.getWindowHeight()-1;
+                }
+
+                long numPixels = 0;
+
+                for(int i = startX; i <= endX; i++)
+                {
+                    for(int j = startY; j <= endY; j++)
+                    {
+                        numPixels++;
+                        int c = myContext.getBitmap().getPixel(i,j);
+                        reds += Color.red(c);
+                        greens += Color.green(c);
+                        blues += Color.blue(c);
+                        //Log.d("MSG","i = " + i + ", j = "+j);
+                    }
+                }
+
+                Toast.makeText(myContext,"Red: " + ((float) reds) / numPixels + " Green: " + ((float) greens) / numPixels + " Blue: " + ((float) blues) / numPixels, Toast.LENGTH_LONG).show();
+                //Toast.makeText(myContext, "x from " + startX + " to " + (endX) + "\ny from " + startY + " to " + (endY), Toast.LENGTH_LONG).show();
 
                 break;
         }
