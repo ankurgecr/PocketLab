@@ -2,6 +2,7 @@ package com.example.akanksha.pocketlab;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.net.Uri;
@@ -13,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.lang.Math;
@@ -21,7 +24,9 @@ import java.lang.Math;
 public class PhotoView extends Activity {
 
     Uri imgUri;
-    ImageView imageView;
+    DrawView imageView;
+    //ImageView imageView;
+    //TextView textView;
     boolean isImageFitToScreen;
 
     @Override
@@ -29,7 +34,9 @@ public class PhotoView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_view);
 
-        imageView = (ImageView) findViewById(R.id.imageView);
+        imageView = (DrawView) findViewById(R.id.drawView);
+        //imageView = (ImageView) findViewById(R.id.imageView);
+        //textView = (TextView) findViewById(R.id.textView);
 
         try {
             imgUri = Uri.parse(getIntent().getExtras().getString("imgUri"));
@@ -55,6 +62,26 @@ public class PhotoView extends Activity {
             Bitmap resizedBitmap = Bitmap.createBitmap(photoBitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setImageBitmap(resizedBitmap);
+
+            long reds = 0;
+            long greens = 0;
+            long blues = 0;
+            long numPixels = 0;
+
+            for(int i = 0; i < windowWidth; i++)
+            {
+                for(int j = 0; j < windowHeight; j++)
+                {
+                    numPixels++;
+                    int c = resizedBitmap.getPixel(i,j);
+                    reds += Color.red(c);
+                    greens += Color.green(c);
+                    blues += Color.blue(c);
+                }
+            }
+
+            //textView.setText("Red: " + ((float) reds) / numPixels + " Green: " + ((float) greens) / numPixels + " Blue: " + ((float) blues) / numPixels);
+            Toast.makeText(this,"Red: " + ((float) reds) / numPixels + " Green: " + ((float) greens) / numPixels + " Blue: " + ((float) blues) / numPixels, Toast.LENGTH_LONG).show();
         }
         catch(IOException e)
         {

@@ -1,12 +1,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:gravity="center">
+android:gravity="center"
+    android:weightSum="1">
 
-<ImageView
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="372dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textView"
+        android:layout_weight="0.82" />
+
+    <ImageView
     android:id="@+id/imageView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:adjustViewBounds="false"/>
+
+    <view
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        class="com.example.akanksha.pocketlab.DrawView"
+        android:id="@+id/drawView"
+        android:layout_gravity="center_vertical" />
 
 </LinearLayout>
