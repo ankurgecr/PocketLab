@@ -79,7 +79,7 @@ public class DrawView extends ImageView {
 
         //draw stroke
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.parseColor("#AADB1255"));
+        paint.setColor(Color.parseColor("#AA00D8FF"));
         paint.setStrokeWidth(2);
         canvas.drawRect(
                 left + colorballs.get(0).getWidthOfBall() / 2,
@@ -88,7 +88,7 @@ public class DrawView extends ImageView {
                 bottom + colorballs.get(2).getWidthOfBall() / 2, paint);
         //fill the rectangle
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.parseColor("#55DB1255"));
+        paint.setColor(Color.parseColor("#5500D8FF"));
         paint.setStrokeWidth(0);
         canvas.drawRect(
                 left + colorballs.get(0).getWidthOfBall() / 2,
@@ -99,15 +99,15 @@ public class DrawView extends ImageView {
         //draw the corners
         BitmapDrawable bitmap = new BitmapDrawable();
         // draw the balls on the canvas
-        paint.setColor(Color.BLUE);
-        paint.setTextSize(18);
-        paint.setStrokeWidth(0);
+        paint.setColor(Color.parseColor("#FF00D8FF"));
+        //paint.setTextSize(18);
+        //paint.setStrokeWidth(0);
         for (int i =0; i < colorballs.size(); i ++) {
             ColorBall ball = colorballs.get(i);
             canvas.drawBitmap(ball.getBitmap(), ball.getX(), ball.getY(),
                     paint);
 
-            canvas.drawText("" + (i+1), ball.getX(), ball.getY(), paint);
+            //canvas.drawText("" + (i+1), ball.getX(), ball.getY(), paint);
         }
     }
 
@@ -144,7 +144,7 @@ public class DrawView extends ImageView {
                     groupId = 1;
                     // declare each ball with the ColorBall class
                     for (Point pt : points) {
-                        colorballs.add(new ColorBall(getContext(), R.mipmap.ic_launcher, pt));
+                        colorballs.add(new ColorBall(getContext(), R.mipmap.ball, pt));
                     }
                 } else {
                     //resize rectangle
@@ -227,8 +227,9 @@ public class DrawView extends ImageView {
 
         public ColorBall(Context context, int resourceId, Point point) {
             this.id = count++;
-            bitmap = BitmapFactory.decodeResource(context.getResources(),
+            Bitmap imgBitmap = BitmapFactory.decodeResource(context.getResources(),
                     resourceId);
+            bitmap = Bitmap.createScaledBitmap(imgBitmap,(int)(0.3*imgBitmap.getWidth()),(int)(0.3*imgBitmap.getHeight()),true);
             mContext = context;
             this.point = point;
         }
