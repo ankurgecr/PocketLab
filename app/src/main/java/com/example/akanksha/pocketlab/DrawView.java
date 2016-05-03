@@ -228,6 +228,10 @@ public class DrawView extends ImageView {
                 long greens = 0;
                 long blues = 0;
 
+                float r = 0;
+                float g = 0;
+                float b = 0;
+
                 //int boxWidth = Math.abs(colorballs.get(2).getX() - colorballs.get(1).getX());
                 //int boxHeight = Math.abs(colorballs.get(1).getY()-colorballs.get(0).getY());
 
@@ -260,7 +264,7 @@ public class DrawView extends ImageView {
                     for(int j = startY; j <= endY; j++)
                     {
                         numPixels++;
-                        int c = myContext.getBitmap().getPixel(i,j);
+                        int c = myContext.getBitmapPixel(i,j);
                         reds += Color.red(c);
                         greens += Color.green(c);
                         blues += Color.blue(c);
@@ -268,9 +272,15 @@ public class DrawView extends ImageView {
                     }
                 }
 
-                Toast.makeText(myContext,"Red: " + ((float) reds) / numPixels + " Green: " + ((float) greens) / numPixels + " Blue: " + ((float) blues) / numPixels, Toast.LENGTH_LONG).show();
+                r = ((float) reds)/numPixels;
+                g = ((float) greens) / numPixels;
+                b = ((float) blues) / numPixels;
+
+                myContext.setColorText("Red: " + r + "\nGreen: " + g + "\nBlue: " + b);
+                //Toast.makeText(myContext,"Red: " + ((float) reds) / numPixels + " Green: " + ((float) greens) / numPixels + " Blue: " + ((float) blues) / numPixels, Toast.LENGTH_LONG).show();
                 //Toast.makeText(myContext, "x from " + startX + " to " + (endX) + "\ny from " + startY + " to " + (endY), Toast.LENGTH_LONG).show();
 
+                myContext.setColorboxColor(r,g,b);
                 break;
         }
         // redraw the canvas

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,8 +27,9 @@ public class PhotoView extends Activity {
     Uri imgUri;
     DrawView imageView;
     //ImageView imageView;
-    //TextView textView;
+    TextView textView;
     //boolean isImageFitToScreen;
+    View colorBox;
     Bitmap bm;
     int windowHeight;
     int windowWidth;
@@ -39,7 +41,8 @@ public class PhotoView extends Activity {
 
         imageView = (DrawView) findViewById(R.id.drawView);
         //imageView = (ImageView) findViewById(R.id.imageView);
-        //textView = (TextView) findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.textView);
+        colorBox = (View) findViewById(R.id.colorBox);
 
         try {
             imgUri = Uri.parse(getIntent().getExtras().getString("imgUri"));
@@ -71,6 +74,10 @@ public class PhotoView extends Activity {
             long blues = 0;
             long numPixels = 0;
 
+            float r = 0;
+            float g = 0;
+            float b = 0;
+
             for(int i = 0; i < windowWidth; i++)
             {
                 for(int j = 0; j < windowHeight; j++)
@@ -83,8 +90,14 @@ public class PhotoView extends Activity {
                 }
             }
 
-            //textView.setText("Red: " + ((float) reds) / numPixels + " Green: " + ((float) greens) / numPixels + " Blue: " + ((float) blues) / numPixels);
-            Toast.makeText(this,"Red: " + ((float) reds) / numPixels + " Green: " + ((float) greens) / numPixels + " Blue: " + ((float) blues) / numPixels, Toast.LENGTH_LONG).show();
+            r = ((float) reds)/numPixels;
+            g = ((float) greens) / numPixels;
+            b = ((float) blues) / numPixels;
+
+            setColorText("Red: " + r + "\nGreen: " + g / numPixels + "\nBlue: " + b);
+            //Toast.makeText(this,"Red: " + ((float) reds) / numPixels + " Green: " + ((float) greens) / numPixels + " Blue: " + ((float) blues) / numPixels, Toast.LENGTH_LONG).show();
+
+            setColorboxColor(r, g, b);
         }
         catch(IOException e)
         {
@@ -106,9 +119,9 @@ public class PhotoView extends Activity {
         */
     }
 
-    public Bitmap getBitmap()
+    public int getBitmapPixel(int x,int y)
     {
-        return bm;
+        return bm.getPixel(x,y);
     }
 
     public int getWindowHeight()
@@ -119,6 +132,16 @@ public class PhotoView extends Activity {
     public int getWindowWidth()
     {
         return windowWidth;
+    }
+
+    public void setColorText(String s)
+    {
+        textView.setText(s);
+    }
+
+    public void setColorboxColor(double r, double g, double b)
+    {
+        colorBox.setBackgroundColor(Color.rgb((int)r,(int)g,(int)b));
     }
 
     /*
