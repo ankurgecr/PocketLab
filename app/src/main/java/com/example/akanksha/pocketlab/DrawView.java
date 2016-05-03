@@ -19,6 +19,8 @@ import android.widget.ImageView;
  * Created by Akanksha on 4/26/2016.
  */
 
+// http://stackoverflow.com/questions/8974088/how-to-create-a-resizable-rectangle-with-user-touch-events-on-android
+
 public class DrawView extends ImageView {
 
     Point[] points = new Point[4];
