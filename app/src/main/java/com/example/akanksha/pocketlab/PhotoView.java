@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.Math;
 
@@ -141,7 +142,30 @@ public class PhotoView extends Activity {
 
     public void setColorboxColor(double r, double g, double b)
     {
-        colorBox.setBackgroundColor(Color.rgb((int)r,(int)g,(int)b));
+        colorBox.setBackgroundColor(Color.rgb((int) r, (int) g, (int) b));
+    }
+
+    @Override
+    public void onBackPressed() {
+        File f = new File(imgUri.getPath());
+        if(f.exists())
+        {
+            f.delete();
+        }
+        super.onBackPressed();
+        return;
+    }
+
+    @Override
+    public void onStop()
+    {
+        File f = new File(imgUri.getPath());
+        if(f.exists())
+        {
+            f.delete();
+        }
+        super.onStop();
+        return;
     }
 
     /*
