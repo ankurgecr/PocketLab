@@ -8,8 +8,15 @@ import processing.core.PFont;
  */
 public class Thermometer extends PApplet {
 
+    /*int j = 0;
+    int input_degree = 75;
+    int degree;*/
+
+    int input_degree = 75;
+    int degree;
     int j = 0;
-    int degree = 75;
+    int celsius = 0;
+    int marker;
 
     PFont font;
 
@@ -22,10 +29,13 @@ public class Thermometer extends PApplet {
     @Override
     public void setup()
     {
-        background(29, 65, 115);
-        thermoScale();
+        background(11, 34, 127);
+        //thermoScale();
         font = createFont("sans-serif-light",22);
         textFont(font);
+        //drawTempMarker();
+
+        thermoScale();
         drawTempMarker();
 
     }
@@ -33,17 +43,54 @@ public class Thermometer extends PApplet {
     @Override
     public void draw()
     {
-        int marker;
+        background(11, 34, 127);
+        thermoScale();
+        drawTempMarker();
         temperature0();
+
+        if (celsius == 1)
+        {
+            degree = (5*(input_degree-32))/9;
+        }
+        else if (celsius == 0)
+        {
+            degree = input_degree;
+        }
+
         marker = degree*5;
-        if(j<marker)
+        while(j<marker)
         {
             temperatureInc(j);
             j++;
-        }//if
-
+        }
+        j=0;
         displaydegree(degree);
+        tapEvent();
     }
+
+    void tapEvent()
+    {
+        if (mousePressed)
+        {
+            background(11, 34, 127);
+            thermoScale();
+            drawTempMarker();
+            while (j < marker) {
+                temperatureInc(j);
+                j++;
+            }
+            j = 0;
+            displaydegree(degree);
+
+            if (celsius == 0) //fahrenheit
+            {
+                celsius = 1;
+            } else if (celsius == 1) //celsius
+            {
+                celsius = 0;
+            }
+        }
+    }//tapEvent()
 
     void thermoScale()
     {
@@ -52,31 +99,26 @@ public class Thermometer extends PApplet {
         rect(440, 225, 120, 700);
 
         noStroke();
-        fill(0, 0,255);
+        fill(21,66,245);
         ellipse(500, 925, 225, 225);
     }//thermoScale()
 
     void temperature0()
     {
         noStroke();
-        fill(0,0,255);
+        fill(21,66,245);
         rect(440, 810, 120, 25);
     }//temperature0()
 
     void temperatureInc(int i)
     {
         noStroke();
-        fill(i,0,(255-i));
-        rect(440, (810 - (i-1)), 120, 25);
+        fill(21+(i*2),66-i,(245-i));
+        rect(440, (810 - (i - 1)), 120, 25);
     }//temperatureInc()
 
     void drawTempMarker()
     {
-        textAlign(RIGHT);
-        textSize(44);
-        fill(255,255,73);
-        text("Farenheit", 400, 200);
-
         for(int a = 0; a < 6; a++)
         {
             strokeWeight(4);
@@ -112,9 +154,31 @@ public class Thermometer extends PApplet {
 
     void displaydegree(int deg)
     {
+        if (celsius == 0)
+        {
+            textAlign(RIGHT);
+            textSize(36);
+            fill(245,222,0);
+            text("Fahrenheit",(width/3),height/3);
+        }
+        else if (celsius == 1)
+        {
+            textAlign(RIGHT);
+            textSize(36);
+            fill(245,222,0);
+            text("Celsius",(width/3),height/3);
+        }
+
         textAlign(LEFT);
-        textSize(44);
+        textSize(36);
         fill(255);
-        text(deg+" degrees",2*(width/3),200);
+        text(deg+" degrees",2*(width/3),height/3);
+
+        textAlign(CENTER);
+        textSize(26);
+        fill(255);
+        text("Tap to convert",(width/2),(height-(height/10)));
     }//displaydegree()
+
+
 }
