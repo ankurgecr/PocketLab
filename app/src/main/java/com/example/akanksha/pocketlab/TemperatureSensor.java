@@ -6,14 +6,22 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 
 public class TemperatureSensor extends ActionBarActivity {
+
+    Button newDataButton;
+    Button saveDataButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_sensor);
+
+        newDataButton = (Button) findViewById(R.id.new_data_button);
+        saveDataButton = (Button) findViewById(R.id.save_data_button);
+
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = new Thermometer();
         fragmentManager.beginTransaction()

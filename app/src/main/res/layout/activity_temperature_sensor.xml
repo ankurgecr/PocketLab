@@ -11,4 +11,19 @@
     android:background="#0b227f">
 
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Data"
+        android:id="@+id/new_data_button"
+        android:layout_gravity="left|bottom" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Data"
+        android:id="@+id/save_data_button"
+        android:layout_gravity="right|bottom" />
 </FrameLayout>
