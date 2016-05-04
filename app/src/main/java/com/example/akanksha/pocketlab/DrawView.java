@@ -193,13 +193,13 @@ public class DrawView extends ImageView {
 
                 if (balID > -1 && balID < 4) {
                     // move the balls the same as the finger
-                    if(X >= myContext.getWindowWidth()-5)
+                    if(X > this.getWidth()-5)
                     {
-                        X = myContext.getWindowWidth()-5;
+                        X = this.getWidth()-5;
                     }
-                    if(Y >= myContext.getWindowHeight()-5)
+                    if(Y > this.getHeight()-5)
                     {
-                        Y = myContext.getWindowHeight()-5;
+                        Y = this.getHeight()-5;
                     }
 
                     colorballs.get(balID).setX(X);
@@ -248,23 +248,28 @@ public class DrawView extends ImageView {
                 {
                     startY = 0;
                 }
-                if(endX > myContext.getWindowWidth())
+                if(endX > this.getWidth())
                 {
-                    endX = myContext.getWindowWidth()-1;
+                    endX = this.getWidth()-1;
                 }
-                if(endY > myContext.getWindowHeight())
+                if(endY > this.getHeight())
                 {
-                    endY = myContext.getWindowHeight()-1;
+                    endY = this.getHeight()-1;
                 }
 
                 long numPixels = 0;
+                Bitmap bm = ((BitmapDrawable)this.getDrawable()).getBitmap();
 
                 for(int i = startX; i <= endX; i++)
                 {
                     for(int j = startY; j <= endY; j++)
                     {
                         numPixels++;
-                        int c = myContext.getBitmapPixel(i,j);
+                        //int c = myContext.getBitmapPixel(i,j);
+                        int c = bm.getPixel(
+                                    (int) ((double) i * ((double) bm.getWidth() / this.getWidth())),
+                                    (int) ((double) j * ((double) bm.getHeight()/this.getHeight()))
+                                );
                         reds += Color.red(c);
                         greens += Color.green(c);
                         blues += Color.blue(c);
