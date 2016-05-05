@@ -6,33 +6,27 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 
-
-public class TemperatureSensor extends ActionBarActivity {
-
-    Button newDataButton;
-    Button saveDataButton;
-
+/**
+ * Created by asingh95 on 5/2/2016.
+ */
+public class AmbientSensor extends ActionBarActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_temperature_sensor);
-
-        newDataButton = (Button) findViewById(R.id.new_data_button);
-        saveDataButton = (Button) findViewById(R.id.save_data_button);
-
+        setContentView(R.layout.activity_ambient_sensor);
         FragmentManager fragmentManager = getFragmentManager();
-        Fragment fragment = new Thermometer();
+        Fragment fragment = new AmbientBulbs();
         fragmentManager.beginTransaction()
-                .replace(R.id.container0, fragment)
+                .replace(R.id.container5, fragment)
                 .commit();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_temperature_sensor, menu);
+        getMenuInflater().inflate(R.menu.menu_ambient_sensor, menu);
         return true;
     }
 

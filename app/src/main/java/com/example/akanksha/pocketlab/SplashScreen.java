@@ -9,6 +9,7 @@ import android.os.Bundle;
 /**
  * Created by asingh95 on 3/29/2016.
  */
+
 public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,7 @@ public class SplashScreen extends Activity {
         Thread timerThread = new Thread(){
             public void run(){
                 try{
-                    sleep(5000);
+                    sleep(6500);
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{

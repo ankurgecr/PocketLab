@@ -25,6 +25,7 @@ public class MainActivity extends ActionBarActivity {
     private static final String POSTGRESS_DRIVER = "org.postgresql.Driver";
 
     public static String currentUser = "";
+    public static long exptime = 0; //gets from the chosen experiment
 
     Activity mSelf = this;
     TextView resultArea;

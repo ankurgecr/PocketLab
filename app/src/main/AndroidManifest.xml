@@ -29,22 +29,23 @@
 
         <activity
             android:name=".SplashScreen"
-            android:label="@string/title_activity_splash" >
+            android:label="@string/title_activity_splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MainActivity"
+
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen" >
@@ -81,6 +82,14 @@
             android:name=".PhotoView"
             android:label="@string/title_activity_photo_view"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".TemperatureSensorBoard"
+            android:label="@string/title_activity_temperature_sensor_board" >
+        </activity>
+        <activity
+            android:name=".AmbientSensor"
+            android:label="@string/title_activity_ambient_sensor">
         </activity>
     </application>
 
