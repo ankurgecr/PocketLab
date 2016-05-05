@@ -38,6 +38,8 @@ public class DrawView extends ImageView {
     private ArrayList<ColorBall> colorballs = new ArrayList<ColorBall>();
     // array that holds the balls
     private int balID = 0;
+
+    private int ballCount = 0;
     // variable to know what ball is being dragged
     Paint paint;
     Canvas canvas;
@@ -153,7 +155,7 @@ public class DrawView extends ImageView {
                     groupId = 1;
                     // declare each ball with the ColorBall class
                     for (Point pt : points) {
-                        colorballs.add(new ColorBall(getContext(), R.mipmap.ball, pt));
+                        colorballs.add(new ColorBall(getContext(), R.mipmap.ball, pt, ballCount++));
                     }
                 } else {
                     //resize rectangle
@@ -189,9 +191,9 @@ public class DrawView extends ImageView {
                 break;
 
             case MotionEvent.ACTION_MOVE: // touch drag with the ball
+                //Log.d("MSG","action_move");
 
-
-                if (balID > -1 && balID < 4) {
+                if (balID > -1) {
                     // move the balls the same as the finger
                     if(X > this.getWidth()-5)
                     {
@@ -301,10 +303,10 @@ public class DrawView extends ImageView {
         Context mContext;
         Point point;
         int id;
-        static int count = 0;
+        //static int count = 0;
 
-        public ColorBall(Context context, int resourceId, Point point) {
-            this.id = count++;
+        public ColorBall(Context context, int resourceId, Point point, int id) {
+            this.id = id;
             Bitmap imgBitmap = BitmapFactory.decodeResource(context.getResources(),
                     resourceId);
             bitmap = Bitmap.createScaledBitmap(imgBitmap,(int)(0.3*imgBitmap.getWidth()),(int)(0.3*imgBitmap.getHeight()),true);
