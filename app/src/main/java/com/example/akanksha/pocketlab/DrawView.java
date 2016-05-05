@@ -288,6 +288,10 @@ public class DrawView extends ImageView {
                 //Toast.makeText(myContext, "x from " + startX + " to " + (endX) + "\ny from " + startY + " to " + (endY), Toast.LENGTH_LONG).show();
 
                 myContext.setColorboxColor(r,g,b);
+
+                myContext.setRed(r);
+                myContext.setGreen(g);
+                myContext.setBlue(b);
                 break;
         }
         // redraw the canvas

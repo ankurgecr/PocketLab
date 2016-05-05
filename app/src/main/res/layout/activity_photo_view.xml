@@ -37,5 +37,28 @@ android:layout_height="fill_parent" >
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:visibility="visible"/>
+    <Button android:id="@+id/button_newData"
+        style="?android:attr/buttonStyleSmall"
+        android:text="New Data"
+        android:layout_width="80dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="17dp"
+        android:layout_marginLeft="17dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="11dp" />
+
+    <Button android:id="@+id/button_saveData"
+        style="?android:attr/buttonStyleSmall"
+        android:text="Save Data"
+        android:layout_width="80dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="11dp" />
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.example.akanksha.pocketlab;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.lang.Math;
+import java.util.concurrent.ExecutionException;
 
 // http://stackoverflow.com/questions/24463691/how-to-show-imageview-full-screen-on-imageview-click
 public class PhotoView extends Activity {
@@ -29,11 +32,18 @@ public class PhotoView extends Activity {
     DrawView imageView;
     //ImageView imageView;
     TextView textView;
+    Button newDataButton;
+    Button saveDataButton;
     //boolean isImageFitToScreen;
     View colorBox;
     Bitmap bm;
     int windowHeight;
     int windowWidth;
+    Activity photoViewSelf = this;
+
+    float red;
+    float green;
+    float blue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +54,35 @@ public class PhotoView extends Activity {
         //imageView = (ImageView) findViewById(R.id.imageView);
         textView = (TextView) findViewById(R.id.textView);
         colorBox = (View) findViewById(R.id.colorBox);
+
+        newDataButton = (Button) findViewById(R.id.button_newData);
+        newDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(photoViewSelf, ColorSensor.class);
+                startActivity(intent);
+            }
+        });
+
+        saveDataButton = (Button) findViewById(R.id.button_saveData);
+        saveDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long colorTime =  System.currentTimeMillis();
+                String data = colorTime + ":rgb:" + red + "," + green + "," + blue + ";";
+                SaveDataPointSQL s = new SaveDataPointSQL(MainActivity.exptime);
+                s.execute(MainActivity.currentUser, "color",data);
+                try {
+                    if (s.get() == "Works"){
+                        Log.d("DEBUG","Saved new color");
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         try {
             imgUri = Uri.parse(getIntent().getExtras().getString("imgUri"));
@@ -75,10 +114,6 @@ public class PhotoView extends Activity {
             long blues = 0;
             long numPixels = 0;
 
-            float r = 0;
-            float g = 0;
-            float b = 0;
-
             for(int i = 0; i < windowWidth; i++)
             {
                 for(int j = 0; j < windowHeight; j++)
@@ -91,14 +126,14 @@ public class PhotoView extends Activity {
                 }
             }
 
-            r = ((float) reds)/numPixels;
-            g = ((float) greens) / numPixels;
-            b = ((float) blues) / numPixels;
+            red = ((float) reds)/numPixels;
+            green = ((float) greens) / numPixels;
+            blue = ((float) blues) / numPixels;
 
-            setColorText("Red: " + r + "\nGreen: " + g / numPixels + "\nBlue: " + b);
+            setColorText("Red: " + red + "\nGreen: " + green / numPixels + "\nBlue: " + blue);
             //Toast.makeText(this,"Red: " + ((float) reds) / numPixels + " Green: " + ((float) greens) / numPixels + " Blue: " + ((float) blues) / numPixels, Toast.LENGTH_LONG).show();
 
-            setColorboxColor(r, g, b);
+            setColorboxColor(red, green, blue);
         }
         catch(IOException e)
         {
@@ -143,6 +178,21 @@ public class PhotoView extends Activity {
     public void setColorboxColor(double r, double g, double b)
     {
         colorBox.setBackgroundColor(Color.rgb((int) r, (int) g, (int) b));
+    }
+
+    public void setRed(float r)
+    {
+        this.red = r;
+    }
+
+    public void setGreen(float g)
+    {
+        this.green = g;
+    }
+
+    public void setBlue(float b)
+    {
+        this.blue = b;
     }
 
     @Override

@@ -122,4 +122,9 @@ public class ColorSensor extends ActionBarActivity {
             startActivity(intent);
         }
     }
+
+    public void clickCapture()
+    {
+        captureButton.performClick();
+    }
 }
