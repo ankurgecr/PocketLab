@@ -1,5 +1,7 @@
 package com.example.akanksha.pocketlab;
 
+import android.app.Activity;
+
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -8,15 +10,17 @@ import processing.core.PFont;
  */
 public class Thermometer extends PApplet {
 
+    TemperatureSensor myActivity;
+
     /*int j = 0;
     int input_degree = 75;
     int degree;*/
 
-    int input_degree = 75;
-    int degree;
+    float input_degree = 75;
+    float degree;
     int j = 0;
     int celsius = 0;
-    int marker;
+    float marker;
 
     PFont font;
 
@@ -29,6 +33,8 @@ public class Thermometer extends PApplet {
     @Override
     public void setup()
     {
+        myActivity = (TemperatureSensor) getActivity();
+
         background(11, 34, 127);
         //thermoScale();
         font = createFont("sans-serif-light",22);
@@ -43,6 +49,7 @@ public class Thermometer extends PApplet {
     @Override
     public void draw()
     {
+        input_degree = myActivity.getCurrentTemp();
         background(11, 34, 127);
         thermoScale();
         drawTempMarker();
@@ -152,7 +159,7 @@ public class Thermometer extends PApplet {
         }//for
     }//drawTempMarker()
 
-    void displaydegree(int deg)
+    void displaydegree(float deg)
     {
         if (celsius == 0)
         {
