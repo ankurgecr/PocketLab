@@ -111,9 +111,7 @@ public class ColorSensor extends ActionBarActivity {
 
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
-            //Bitmap photo = (Bitmap) data.getExtras().get("output");
             Uri imgUri = Uri.fromFile(photoFile);
-            //Toast.makeText(this,data.getExtras().get("data").toString(),Toast.LENGTH_LONG).show();
             Intent intent = new Intent(colorSensorSelf, ColorSensor_ViewImage.class);
             intent.putExtra("imgUri",imgUri.toString());
             startActivity(intent);

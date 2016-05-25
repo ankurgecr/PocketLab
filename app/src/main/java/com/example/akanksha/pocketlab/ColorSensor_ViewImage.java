@@ -30,11 +30,9 @@ public class ColorSensor_ViewImage extends Activity {
 
     Uri imgUri;
     DrawView imageView;
-    //ImageView imageView;
     TextView textView;
     Button newDataButton;
     Button saveDataButton;
-    //boolean isImageFitToScreen;
     View colorBox;
     Bitmap bm;
     int windowHeight;
@@ -51,7 +49,6 @@ public class ColorSensor_ViewImage extends Activity {
         setContentView(R.layout.activity_photo_view);
 
         imageView = (DrawView) findViewById(R.id.drawView);
-        //imageView = (ImageView) findViewById(R.id.imageView);
         textView = (TextView) findViewById(R.id.textView);
         colorBox = (View) findViewById(R.id.colorBox);
 
@@ -97,12 +94,7 @@ public class ColorSensor_ViewImage extends Activity {
             windowHeight = size.y;
             windowWidth = size.x;
 
-            float scaleHeight = ((float) windowHeight/bitmapHeight);
-            float scaleWidth = ((float) windowWidth/bitmapWidth);
-
             Matrix matrix = new Matrix();
-            //matrix.postScale(scaleWidth, scaleHeight);
-            //matrix.postScale(1,1);
             matrix.postRotate(90);
 
             bm = Bitmap.createBitmap(photoBitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
@@ -131,7 +123,6 @@ public class ColorSensor_ViewImage extends Activity {
             blue = ((float) blues) / numPixels;
 
             setColorText("Red: " + red + "\nGreen: " + green / numPixels + "\nBlue: " + blue);
-            //Toast.makeText(this,"Red: " + ((float) reds) / numPixels + " Green: " + ((float) greens) / numPixels + " Blue: " + ((float) blues) / numPixels, Toast.LENGTH_LONG).show();
 
             setColorboxColor(red, green, blue);
         }
@@ -140,19 +131,6 @@ public class ColorSensor_ViewImage extends Activity {
             Log.d("ERROR", "File not found: " + e);
         }
 
-
-
-        /*
-        if(isImageFitToScreen) {
-            isImageFitToScreen=false;
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            imageView.setAdjustViewBounds(true);
-        }else{
-            isImageFitToScreen=true;
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        }
-        */
     }
 
     public int getBitmapPixel(int x,int y)
@@ -217,28 +195,4 @@ public class ColorSensor_ViewImage extends Activity {
         super.onStop();
         return;
     }
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_photo_view, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    */
 }

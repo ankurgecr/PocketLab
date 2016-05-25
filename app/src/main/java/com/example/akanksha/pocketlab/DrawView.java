@@ -94,28 +94,14 @@ public class DrawView extends ImageView {
                 top + colorballs.get(0).getWidthOfBall() / 2,
                 right + colorballs.get(2).getWidthOfBall() / 2,
                 bottom + colorballs.get(2).getWidthOfBall() / 2, paint);
-        //fill the rectangle
-        /*paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.parseColor("#11FFFFFF"));
-        paint.setStrokeWidth(0);
-        canvas.drawRect(
-                left + colorballs.get(0).getWidthOfBall() / 2,
-                top + colorballs.get(0).getWidthOfBall() / 2,
-                right + colorballs.get(2).getWidthOfBall() / 2,
-                bottom + colorballs.get(2).getWidthOfBall() / 2, paint);
-        */
         //draw the corners
         BitmapDrawable bitmap = new BitmapDrawable();
         // draw the balls on the canvas
         paint.setColor(Color.parseColor("#FF00D8FF"));
-        //paint.setTextSize(18);
-        //paint.setStrokeWidth(0);
         for (int i =0; i < colorballs.size(); i ++) {
             ColorBall ball = colorballs.get(i);
             canvas.drawBitmap(ball.getBitmap(), ball.getX(), ball.getY(),
                     paint);
-
-            //canvas.drawText("" + (i), ball.getX(), ball.getY(), paint);
         }
     }
 
@@ -231,9 +217,6 @@ public class DrawView extends ImageView {
                 float g = 0;
                 float b = 0;
 
-                //int boxWidth = Math.abs(colorballs.get(2).getX() - colorballs.get(1).getX());
-                //int boxHeight = Math.abs(colorballs.get(1).getY()-colorballs.get(0).getY());
-
                 int startX = Math.min(colorballs.get(2).getX(), colorballs.get(1).getX());
                 int startY = Math.min(colorballs.get(1).getY(), colorballs.get(0).getY());
                 int endX = Math.max(colorballs.get(2).getX(), colorballs.get(1).getX());
@@ -281,8 +264,6 @@ public class DrawView extends ImageView {
                 b = ((float) blues) / numPixels;
 
                 myContext.setColorText("Red: " + r + "\nGreen: " + g + "\nBlue: " + b);
-                //Toast.makeText(myContext,"Red: " + ((float) reds) / numPixels + " Green: " + ((float) greens) / numPixels + " Blue: " + ((float) blues) / numPixels, Toast.LENGTH_LONG).show();
-                //Toast.makeText(myContext, "x from " + startX + " to " + (endX) + "\ny from " + startY + " to " + (endY), Toast.LENGTH_LONG).show();
 
                 myContext.setColorboxColor(r,g,b);
 
