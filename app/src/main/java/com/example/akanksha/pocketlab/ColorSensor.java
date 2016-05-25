@@ -124,4 +124,11 @@ public class ColorSensor extends ActionBarActivity {
     {
         captureButton.performClick();
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(colorSensorSelf, NewExperiment.class);
+        startActivity(intent);
+    }
 }
