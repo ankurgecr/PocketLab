@@ -19,7 +19,7 @@ public class Thermometer extends PApplet {
     float input_degree = 75;
     float degree;
     int j = 0;
-    int celsius = 0;
+    String units = "F";
     float marker;
 
     PFont font;
@@ -55,14 +55,7 @@ public class Thermometer extends PApplet {
         drawTempMarker();
         temperature0();
 
-        if (celsius == 1)
-        {
-            degree = (5*(input_degree-32))/9;
-        }
-        else if (celsius == 0)
-        {
-            degree = input_degree;
-        }
+        degree = input_degree;
 
         marker = degree*5;
         while(j<marker)
@@ -79,6 +72,8 @@ public class Thermometer extends PApplet {
     {
         if (mousePressed)
         {
+            myActivity.toggleUnits();
+
             background(11, 34, 127);
             thermoScale();
             drawTempMarker();
@@ -89,13 +84,7 @@ public class Thermometer extends PApplet {
             j = 0;
             displaydegree(degree);
 
-            if (celsius == 0) //fahrenheit
-            {
-                celsius = 1;
-            } else if (celsius == 1) //celsius
-            {
-                celsius = 0;
-            }
+            units = myActivity.getUnits();
         }
     }//tapEvent()
 
@@ -161,14 +150,14 @@ public class Thermometer extends PApplet {
 
     void displaydegree(float deg)
     {
-        if (celsius == 0)
+        if(units.equals("F"))
         {
             textAlign(RIGHT);
             textSize(36);
             fill(245,222,0);
             text("Fahrenheit",(width/3),height/3);
         }
-        else if (celsius == 1)
+        else if(units.equals("C"))
         {
             textAlign(RIGHT);
             textSize(36);

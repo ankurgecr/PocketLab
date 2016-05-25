@@ -14,18 +14,10 @@
 
 package com.example.akanksha.pocketlab;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 
 import ioio.lib.api.AnalogInput;
@@ -35,19 +27,12 @@ import ioio.lib.api.exception.ConnectionLostException;
 import ioio.lib.util.AbstractIOIOActivity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Environment;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 
-public class TemperatureSensor extends AbstractIOIOActivity implements OnCheckedChangeListener {
+public class TemperatureSensor extends AbstractIOIOActivity {
 
     Button newDataButton;
     Button saveDataButton;
@@ -57,7 +42,6 @@ public class TemperatureSensor extends AbstractIOIOActivity implements OnChecked
     private static final int GND_PIN = 27; //46;
     private static final int INPUT_PIN = 35; //45;
 
-    private boolean tempF;
     private float currentTemp;
     private String units;
     private boolean measureTemp = true;
@@ -86,7 +70,6 @@ public class TemperatureSensor extends AbstractIOIOActivity implements OnChecked
             }
         });
 
-        tempF = true;
         currentTemp = 0;
         units = "F";
 
@@ -95,9 +78,7 @@ public class TemperatureSensor extends AbstractIOIOActivity implements OnChecked
         fragmentManager.beginTransaction()
                 .replace(R.id.container0, fragment)
                 .commit();
-
-
-    }
+    } // onCreate()
 
     /**
      * This is the thread on which all the IOIO activity happens. It will be run
@@ -141,81 +122,32 @@ public class TemperatureSensor extends AbstractIOIOActivity implements OnChecked
             if(measureTemp) {
                 float avgtemp = 0;
                 float divisor = 0;
-                //String units = "";
                 for (int i = 0; i < 30; i++) {
                     try {
                         float v = inputPin_.getVoltage();
                         float voltsPerDegree = 0.02f;
-                        units = "C";
-                        //float temp = (v - 0.5f) * 100.0f;
                         float temp = v / voltsPerDegree;
-                        //float temp = v;
-                        if (tempF) {//if (radioF_.isChecked()) {
-                            //temp = temp * 9.0f / 5.0f + 32.0f;
+                        if (units.equals("F")) {
                             temp = ((v / voltsPerDegree) * 9.0f / 5.0f) + 32;
-                            units = "F";
                         }
                         // round to 1 dp
                         temp = Math.round(temp * 10) / 10.0f;
-                        //updateTempField(temp, units);
-                    /*long now = System.currentTimeMillis();
-                    if (now > lastSampleTime_ + SAMPLE_PERIOD) {
-                        lastSampleTime_ = now;
-                        //updateTempField(temp,units);
-                    }*/
                         avgtemp += temp;
                         divisor++;
                         sleep(100);
                     } catch (Exception e) {
                         toast(e.getMessage());
-                    }
+                    } // try/catch
                 }
                 if (divisor >= 25) {
                     currentTemp = avgtemp / divisor;
-                    updateTempField(avgtemp / divisor, units);
-                    //logTemp(avgtemp / divisor, units);
+                    updateTempField(avgtemp / divisor);
                 }
 
                 measureTemp = false;
-            }
-        }
-
-        private void logTemp(float temp, String units) {
-            /*if (logButton_.isChecked()) {
-                Date now = new Date();
-                String filename = "temp_" + DateFormat.format("yyyy_MM_dd", now).toString() + ".csv";
-                CharSequence time = DateFormat.format("hh:mm:ss", now);
-                String line = "" + time + ", " + temp + ", " + units + "\n";
-                updateLastLogLine(line);
-                appendToFile(filename, line);
-            }*/
-            Long temptime =  System.currentTimeMillis();
-            String newdatastr = temptime + ":" + temp + ":" + units + ";";
-            SaveDataPointSQL s = new SaveDataPointSQL(MainActivity.exptime);
-            s.execute(MainActivity.currentUser, "temperature",newdatastr);
-            try {
-                if (s.get() == "Works"){
-                    Log.d("DEBUG","Saved new temp");
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void appendToFile(String filename, String line) {
-            /*File root = Environment.getExternalStorageDirectory();
-            try {
-                FileOutputStream f = new FileOutputStream(new File(root, filename), true);
-                f.write(line.getBytes());
-                f.close();
-            } catch (Exception e) {
-                toast(e.getMessage());
-            }*/
-            return;
-        }
-    }
+            } // if(measureTemp)
+        } // loop()
+    } // class IOIOThread
 
     private void logTemp() {
         Long temptime =  System.currentTimeMillis();
@@ -223,8 +155,9 @@ public class TemperatureSensor extends AbstractIOIOActivity implements OnChecked
         SaveDataPointSQL s = new SaveDataPointSQL(MainActivity.exptime);
         s.execute(MainActivity.currentUser, "temperature",newdatastr);
         try {
-            if (s.get() == "Works"){
+            if (s.get().equals("Works")){
                 Log.d("DEBUG","Saved new temp");
+                toast("Saved " + currentTemp + " degrees " + units);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -243,27 +176,9 @@ public class TemperatureSensor extends AbstractIOIOActivity implements OnChecked
         return new IOIOThread();
     }
 
-    private void updateTempField(final float temp, final String units) {
-        /*runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                temperature_.setText("" + temp + " " + units);
-            }
-        });*/
-
+    private void updateTempField(final float temp) {
         currentTemp = temp;
     }
-
-    /*
-    private void updateLastLogLine(final String line) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                lastLogLine_.setText(line);
-            }
-        });
-    }
-    */
 
     private void toast(final String message) {
         runOnUiThread(new Runnable() {
@@ -278,16 +193,38 @@ public class TemperatureSensor extends AbstractIOIOActivity implements OnChecked
         });
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-            toast("Logging Started");
-        }
-    }
-
     public float getCurrentTemp()
     {
         return currentTemp;
     }
 
-}
+    public String getUnits()
+    {
+        return units;
+    }
+
+    public void toggleUnits()
+    {
+        if(units.equals("C"))
+        {
+            units = "F";
+            currentTemp = CtoF(currentTemp);
+        }
+        else if(units.equals("F"))
+        {
+            units = "C";
+            currentTemp = FtoC(currentTemp);
+        }
+    }
+
+    private float CtoF(float c)
+    {
+        return 9f/5f*c + 32f;
+    }
+
+    private float FtoC(float f)
+    {
+        return 5f/9f*(f-32);
+    }
+
+} // class TemperatureSensor
