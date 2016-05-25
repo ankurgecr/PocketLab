@@ -89,11 +89,6 @@ public class ColorSensor_ViewImage extends Activity {
             int bitmapHeight = photoBitmap.getHeight();
             int bitmapWidth = photoBitmap.getWidth();
 
-            Point size = new Point();
-            getWindowManager().getDefaultDisplay().getSize(size);
-            windowHeight = size.y;
-            windowWidth = size.x;
-
             Matrix matrix = new Matrix();
             matrix.postRotate(90);
 
@@ -101,17 +96,20 @@ public class ColorSensor_ViewImage extends Activity {
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setImageBitmap(bm);
 
+            int[] colorArray = new int[bm.getWidth()*bm.getHeight()];
+            bm.getPixels(colorArray,0,bm.getWidth(),0,0,bm.getWidth(),bm.getHeight());
+
             long reds = 0;
             long greens = 0;
             long blues = 0;
             long numPixels = 0;
 
-            for(int i = 0; i < windowWidth; i++)
+            for(int i = 0; i < bm.getWidth(); i++)
             {
-                for(int j = 0; j < windowHeight; j++)
+                for(int j = 0; j < bm.getHeight(); j++)
                 {
                     numPixels++;
-                    int c = bm.getPixel(i,j);
+                    int c = colorArray[i*bm.getHeight()+j];//bm.getPixel(i,j);
                     reds += Color.red(c);
                     greens += Color.green(c);
                     blues += Color.blue(c);
