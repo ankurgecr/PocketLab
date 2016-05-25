@@ -103,7 +103,7 @@ public class DrawView extends ImageView {
             canvas.drawBitmap(ball.getBitmap(), ball.getX(), ball.getY(),
                     paint);
         }
-    }
+    } // onDraw()
 
     // events when touching the screen
     public boolean onTouchEvent(MotionEvent event) {
@@ -140,7 +140,8 @@ public class DrawView extends ImageView {
                     for (Point pt : points) {
                         colorballs.add(new ColorBall(getContext(), R.mipmap.ball, pt, ballCount++));
                     }
-                } else {
+                }
+                else {
                     //resize rectangle
                     balID = -1;
                     groupId = -1;
@@ -170,7 +171,7 @@ public class DrawView extends ImageView {
                         }
                         invalidate();
                     }
-                }
+                } // else point[0] != null
                 break;
 
             case MotionEvent.ACTION_MOVE: // touch drag with the ball
@@ -271,12 +272,12 @@ public class DrawView extends ImageView {
                 myContext.setGreen(g);
                 myContext.setBlue(b);
                 break;
-        }
+        } // switch(eventAction)
         // redraw the canvas
         invalidate();
         return true;
 
-    }
+    } // onTouchEvent()
 
 
     public static class ColorBall {
@@ -327,5 +328,5 @@ public class DrawView extends ImageView {
         public void setY(int y) {
             point.y = y;
         }
-    }
-}
+    } // class ColorBall
+} // class DrawView

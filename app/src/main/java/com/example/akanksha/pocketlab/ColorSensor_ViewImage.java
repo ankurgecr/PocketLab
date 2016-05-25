@@ -5,24 +5,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Point;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.Math;
 import java.util.concurrent.ExecutionException;
 
 // http://stackoverflow.com/questions/24463691/how-to-show-imageview-full-screen-on-imageview-click
@@ -46,7 +39,7 @@ public class ColorSensor_ViewImage extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_view);
+        setContentView(R.layout.activity_color_sensor_view_image);
 
         imageView = (DrawView) findViewById(R.id.drawView);
         textView = (TextView) findViewById(R.id.textView);
@@ -97,7 +90,7 @@ public class ColorSensor_ViewImage extends Activity {
             imageView.setImageBitmap(bm);
 
             int[] colorArray = new int[bm.getWidth()*bm.getHeight()];
-            bm.getPixels(colorArray,0,bm.getWidth(),0,0,bm.getWidth(),bm.getHeight());
+            bm.getPixels(colorArray, 0, bm.getWidth(), 0, 0, bm.getWidth(), bm.getHeight());
 
             long reds = 0;
             long greens = 0;
@@ -109,7 +102,7 @@ public class ColorSensor_ViewImage extends Activity {
                 for(int j = 0; j < bm.getHeight(); j++)
                 {
                     numPixels++;
-                    int c = colorArray[i*bm.getHeight()+j];//bm.getPixel(i,j);
+                    int c = colorArray[i*bm.getHeight()+j];
                     reds += Color.red(c);
                     greens += Color.green(c);
                     blues += Color.blue(c);
