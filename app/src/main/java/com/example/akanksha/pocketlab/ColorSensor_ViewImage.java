@@ -26,7 +26,7 @@ import java.lang.Math;
 import java.util.concurrent.ExecutionException;
 
 // http://stackoverflow.com/questions/24463691/how-to-show-imageview-full-screen-on-imageview-click
-public class PhotoView extends Activity {
+public class ColorSensor_ViewImage extends Activity {
 
     Uri imgUri;
     DrawView imageView;

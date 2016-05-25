@@ -79,8 +79,8 @@
                 android:value="com.example.akanksha.pocketlab.ColorSensor" />
         </activity>
         <activity
-            android:name=".PhotoView"
-            android:label="@string/title_activity_photo_view"
+            android:name=".ColorSensor_ViewImage"
+            android:label="ColorSensor_ViewImage"
             android:screenOrientation="portrait" >
         </activity>
         <activity

@@ -11,11 +11,8 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.lang.Math;
 
@@ -29,7 +26,7 @@ public class DrawView extends ImageView {
 
     Point[] points = new Point[4];
     double[] colorsRGB = new double[3];
-    PhotoView myContext;
+    ColorSensor_ViewImage myContext;
 
     /**
      * point1 and point 3 are of same group and same as point 2 and point4
@@ -49,12 +46,12 @@ public class DrawView extends ImageView {
         paint = new Paint();
         setFocusable(true); // necessary for getting the touch events
         canvas = new Canvas();
-        myContext = (PhotoView) this.getContext();
+        myContext = (ColorSensor_ViewImage) this.getContext();
     }
 
     public DrawView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        myContext = (PhotoView) this.getContext();
+        myContext = (ColorSensor_ViewImage) this.getContext();
     }
 
     public DrawView(Context context, AttributeSet attrs) {
@@ -62,7 +59,7 @@ public class DrawView extends ImageView {
         paint = new Paint();
         setFocusable(true); // necessary for getting the touch events
         canvas = new Canvas();
-        myContext = (PhotoView) this.getContext();
+        myContext = (ColorSensor_ViewImage) this.getContext();
     }
 
     // the method that draws the balls
