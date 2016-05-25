@@ -59,6 +59,8 @@ public class TemperatureSensor extends AbstractIOIOActivity implements OnChecked
 
     private boolean tempF;
     private float currentTemp;
+    private String units;
+    private boolean measureTemp = true;
 
     /**
      * Called when the activity is first created. Here we normally initialize
@@ -70,15 +72,23 @@ public class TemperatureSensor extends AbstractIOIOActivity implements OnChecked
         setContentView(R.layout.activity_temperature_sensor);
 
         newDataButton = (Button) findViewById(R.id.new_data_button);
+        newDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                measureTemp = true;
+            }
+        });
         saveDataButton = (Button) findViewById(R.id.save_data_button);
         saveDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                logTemp();
             }
         });
 
         tempF = true;
+        currentTemp = 0;
+        units = "F";
 
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = new Thermometer();
@@ -128,40 +138,45 @@ public class TemperatureSensor extends AbstractIOIOActivity implements OnChecked
          */
         @Override
         protected void loop() throws ConnectionLostException {
-            float avgtemp = 0;
-            float divisor = 0;
-            String units = "";
-            for (int i = 0; i < 30; i++) {
-                try {
-                    float v = inputPin_.getVoltage();
-                    float voltsPerDegree = 0.02f;
-                    units = "C";
-                    //float temp = (v - 0.5f) * 100.0f;
-                    float temp = v / voltsPerDegree;
-                    //float temp = v;
-                    if(tempF){//if (radioF_.isChecked()) {
-                        //temp = temp * 9.0f / 5.0f + 32.0f;
-                        temp = ((v / voltsPerDegree) * 9.0f / 5.0f) + 32;
-                        units = "F";
-                    }
-                    // round to 1 dp
-                    temp = Math.round(temp * 10) / 10.0f;
-                    //updateTempField(temp, units);
+            if(measureTemp) {
+                float avgtemp = 0;
+                float divisor = 0;
+                //String units = "";
+                for (int i = 0; i < 30; i++) {
+                    try {
+                        float v = inputPin_.getVoltage();
+                        float voltsPerDegree = 0.02f;
+                        units = "C";
+                        //float temp = (v - 0.5f) * 100.0f;
+                        float temp = v / voltsPerDegree;
+                        //float temp = v;
+                        if (tempF) {//if (radioF_.isChecked()) {
+                            //temp = temp * 9.0f / 5.0f + 32.0f;
+                            temp = ((v / voltsPerDegree) * 9.0f / 5.0f) + 32;
+                            units = "F";
+                        }
+                        // round to 1 dp
+                        temp = Math.round(temp * 10) / 10.0f;
+                        //updateTempField(temp, units);
                     /*long now = System.currentTimeMillis();
                     if (now > lastSampleTime_ + SAMPLE_PERIOD) {
                         lastSampleTime_ = now;
                         //updateTempField(temp,units);
                     }*/
-                    avgtemp += temp;
-                    divisor++;
-                    sleep(100);
-                } catch (Exception e) {
-                    toast(e.getMessage());
+                        avgtemp += temp;
+                        divisor++;
+                        sleep(100);
+                    } catch (Exception e) {
+                        toast(e.getMessage());
+                    }
                 }
-            }
-            if (divisor >= 25) {
-                updateTempField(avgtemp / divisor, units);
-                logTemp(avgtemp / divisor, units);
+                if (divisor >= 25) {
+                    currentTemp = avgtemp / divisor;
+                    updateTempField(avgtemp / divisor, units);
+                    //logTemp(avgtemp / divisor, units);
+                }
+
+                measureTemp = false;
             }
         }
 
@@ -199,6 +214,22 @@ public class TemperatureSensor extends AbstractIOIOActivity implements OnChecked
                 toast(e.getMessage());
             }*/
             return;
+        }
+    }
+
+    private void logTemp() {
+        Long temptime =  System.currentTimeMillis();
+        String newdatastr = temptime + ":" + currentTemp + ":" + units + ";";
+        SaveDataPointSQL s = new SaveDataPointSQL(MainActivity.exptime);
+        s.execute(MainActivity.currentUser, "temperature",newdatastr);
+        try {
+            if (s.get() == "Works"){
+                Log.d("DEBUG","Saved new temp");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
     }
 
