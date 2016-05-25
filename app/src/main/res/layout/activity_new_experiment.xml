@@ -27,24 +27,17 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Accelerometer"
-        android:id="@+id/accel_button"
-        android:layout_below="@+id/temperature_button"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Humidity"
-        android:id="@+id/humid_button"
-        android:layout_below="@+id/accel_button"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Ambient Light"
         android:id="@+id/ambient_button"
-        android:layout_below="@+id/humid_button"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/temperature_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save to CSV"
+        android:id="@+id/csv_button"
+        android:layout_marginTop="72dp"
+        android:layout_below="@+id/ambient_button"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
