@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
@@ -102,10 +103,13 @@ public class DrawView extends ImageView {
         BitmapDrawable bitmap = new BitmapDrawable();
         // draw the balls on the canvas
         paint.setColor(Color.parseColor("#FF00D8FF"));
+        paint.setTextSize(18);
+        paint.setStrokeWidth(0);
         for (int i =0; i < colorballs.size(); i ++) {
             ColorBall ball = colorballs.get(i);
             canvas.drawBitmap(ball.getBitmap(), ball.getX(), ball.getY(),
                     paint);
+            canvas.drawText("" + (i), ball.getX(), ball.getY(), paint);
         }
     } // onDraw()
 
@@ -146,39 +150,54 @@ public class DrawView extends ImageView {
                     }
                 }
                 else {
-                    //resize rectangle
                     balID = -1;
                     groupId = -1;
-                    for (int i = colorballs.size()-1; i>=0; i--) {
-                        ColorBall ball = colorballs.get(i);
-                        // check if inside the bounds of the ball (circle)
-                        // get the center for the ball
-                        int centerX = ball.getX() + ball.getWidthOfBall();
-                        int centerY = ball.getY() + ball.getHeightOfBall();
-                        paint.setColor(Color.CYAN);
-                        // calculate the radius from the touch to the center of the
-                        // ball
-                        double radCircle = Math
-                                .sqrt((double) (((centerX - X) * (centerX - X)) + (centerY - Y)
-                                        * (centerY - Y)));
 
-                        if (radCircle < ball.getWidthOfBall()) {
+                    // check to see if touch is inside rectangle
+                    int leftBoundX = Math.min(colorballs.get(0).getX(), colorballs.get(3).getX()) + colorballs.get(0).getWidthOfBall()/2;
+                    int rightBoundX = Math.max(colorballs.get(0).getX(), colorballs.get(3).getX()) - colorballs.get(0).getWidthOfBall()/2;
+                    int topBoundY = Math.max(colorballs.get(0).getY(), colorballs.get(1).getY()) - colorballs.get(0).getHeightOfBall()/2;
+                    int bottomBoundY = Math.min(colorballs.get(0).getY(), colorballs.get(1).getY()) + colorballs.get(0).getHeightOfBall()/2;
 
-                            balID = ball.getID();
-                            if (balID == 1 || balID == 3) {
-                                groupId = 2;
-                            } else {
-                                groupId = 1;
+                    if(X >= leftBoundX && X <= rightBoundX && Y <= topBoundY && Y >= bottomBoundY)
+                    {
+                        moveRectangle = true;
+                    }
+                    else {
+                        //otherwise, resize rectangle
+                        for (int i = colorballs.size() - 1; i >= 0; i--) {
+                            ColorBall ball = colorballs.get(i);
+                            // check if inside the bounds of the ball (circle)
+                            // get the center for the ball
+                            int centerX = ball.getX();
+                            int centerY = ball.getY();
+                            paint.setColor(Color.CYAN);
+                            // calculate the radius from the touch to the center of the
+                            // ball
+                            double radCircle = Math
+                                    .sqrt((double) (((centerX - X) * (centerX - X)) + (centerY - Y)
+                                            * (centerY - Y)));
+
+                            if (radCircle < ball.getWidthOfBall()) {
+
+                                balID = ball.getID();
+                                if (balID == 1 || balID == 3) {
+                                    groupId = 2;
+                                } else {
+                                    groupId = 1;
+                                }
+                                invalidate();
+                                break;
                             }
                             invalidate();
-                            break;
                         }
-                        invalidate();
-                    }
+                    } // else resize rectangle
                 } // else point[0] != null
 
                 oldX = X;
                 oldY = Y;
+
+                Log.d("DEBUG","moveRectangle = " + moveRectangle);
 
                 break;
 
@@ -237,6 +256,8 @@ public class DrawView extends ImageView {
                 break;
 
             case MotionEvent.ACTION_UP:
+                moveRectangle = false;
+
                 long reds = 0;
                 long greens = 0;
                 long blues = 0;
