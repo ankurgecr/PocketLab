@@ -1,6 +1,7 @@
 package com.example.akanksha.pocketlab;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -79,6 +81,14 @@ public class ColorSensor_ViewImage extends Activity {
                 try {
                     if (s.get() == "Works"){
                         Log.d("DEBUG","Saved new color");
+                        if(isRGB)
+                        {
+                            toast("Saved RGB " + red + "," + green + "," + blue);
+                        }
+                        else
+                        {
+                            toast("Saved Lab " + L + "," + a + "," + b);
+                        }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -254,6 +264,19 @@ public class ColorSensor_ViewImage extends Activity {
 
         setColorboxColor();
         setColorText();
+    }
+
+    private void toast(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, message, duration);
+                toast.show();
+            }
+        });
     }
 
     @Override
