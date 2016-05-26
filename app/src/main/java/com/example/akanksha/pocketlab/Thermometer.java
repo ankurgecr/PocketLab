@@ -72,19 +72,26 @@ public class Thermometer extends PApplet {
     {
         if (mousePressed)
         {
-            myActivity.toggleUnits();
+            if(!myActivity.isMeasuring())
+            {
+                myActivity.toggleUnits();
 
-            background(11, 34, 127);
-            thermoScale();
-            drawTempMarker();
-            while (j < marker) {
-                temperatureInc(j);
-                j++;
+                background(11, 34, 127);
+                thermoScale();
+                drawTempMarker();
+                while (j < marker) {
+                    temperatureInc(j);
+                    j++;
+                }
+                j = 0;
+                displaydegree(degree);
+
+                units = myActivity.getUnits();
             }
-            j = 0;
-            displaydegree(degree);
-
-            units = myActivity.getUnits();
+            else
+            {
+                myActivity.toast("Please wait for measurement to complete.");
+            }
         }
     }//tapEvent()
 
