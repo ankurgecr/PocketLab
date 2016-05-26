@@ -41,6 +41,10 @@ public class DrawView extends ImageView {
     Paint paint;
     Canvas canvas;
 
+    private int oldX = 0;
+    private int oldY = 0;
+    private boolean moveRectangle = false;
+
     public DrawView(Context context) {
         super(context);
         paint = new Paint();
@@ -172,6 +176,10 @@ public class DrawView extends ImageView {
                         invalidate();
                     }
                 } // else point[0] != null
+
+                oldX = X;
+                oldY = Y;
+
                 break;
 
             case MotionEvent.ACTION_MOVE: // touch drag with the ball
@@ -206,6 +214,25 @@ public class DrawView extends ImageView {
 
                     invalidate();
                 }
+                else if(points[0] != null && moveRectangle)
+                {
+                    int deltaX = X - oldX;
+                    int deltaY = Y - oldY;
+
+                    colorballs.get(0).setX(colorballs.get(0).getX() + deltaX);
+                    colorballs.get(0).setY(colorballs.get(0).getY() + deltaY);
+                    colorballs.get(1).setX(colorballs.get(1).getX() + deltaX);
+                    colorballs.get(1).setY(colorballs.get(1).getY() + deltaY);
+                    colorballs.get(2).setX(colorballs.get(2).getX() + deltaX);
+                    colorballs.get(2).setY(colorballs.get(2).getY() + deltaY);
+                    colorballs.get(3).setX(colorballs.get(3).getX() + deltaX);
+                    colorballs.get(3).setY(colorballs.get(3).getY() + deltaY);
+
+                    invalidate();
+                }
+
+                oldX = X;
+                oldY = Y;
 
                 break;
 
