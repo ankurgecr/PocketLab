@@ -26,6 +26,7 @@ public class ColorSensor_ViewImage extends Activity {
     TextView textView;
     Button newDataButton;
     Button saveDataButton;
+    Button toggleButton;
     View colorBox;
     Bitmap bm;
     int windowHeight;
@@ -35,6 +36,11 @@ public class ColorSensor_ViewImage extends Activity {
     float red;
     float green;
     float blue;
+    float L;
+    float a;
+    float b;
+
+    boolean isRGB = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +65,15 @@ public class ColorSensor_ViewImage extends Activity {
             @Override
             public void onClick(View v) {
                 long colorTime =  System.currentTimeMillis();
-                String data = colorTime + ":rgb:" + red + "," + green + "," + blue + ";";
+                String data = "";
+                if(isRGB)
+                {
+                    data = colorTime + ":rgb:" + red + "," + green + "," + blue + ";";
+                }
+                else
+                {
+                    data = colorTime + ":lab:" + L + "," + a + "," + b + ";";
+                }
                 SaveDataPointSQL s = new SaveDataPointSQL(MainActivity.exptime);
                 s.execute(MainActivity.currentUser, "color",data);
                 try {
@@ -73,6 +87,25 @@ public class ColorSensor_ViewImage extends Activity {
                 }
             }
         });
+
+        toggleButton = (Button) findViewById(R.id.toggleButton);
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isRGB = !isRGB;
+                if(isRGB)
+                {
+                    toggleButton.setText("Lab");
+                }
+                else
+                {
+                    toggleButton.setText("RGB");
+                }
+
+                setColorText();
+            }
+        });
+
 
         try {
             imgUri = Uri.parse(getIntent().getExtras().getString("imgUri"));
@@ -109,19 +142,68 @@ public class ColorSensor_ViewImage extends Activity {
                 }
             }
 
-            red = ((float) reds)/numPixels;
-            green = ((float) greens) / numPixels;
-            blue = ((float) blues) / numPixels;
-
-            setColorText("Red: " + red + "\nGreen: " + green / numPixels + "\nBlue: " + blue);
-
-            setColorboxColor(red, green, blue);
+            setColor(((float) reds) / numPixels, ((float) greens) / numPixels, ((float) blues) / numPixels);
         }
         catch(IOException e)
         {
             Log.d("ERROR", "File not found: " + e);
         }
 
+    }
+
+    // conversions from http://www.brucelindbloom.com/
+    // assume sRGB
+    private float[] RGBtoLab(float r, float g, float b)
+    {
+        float[] XYZ = new float[3];
+        float[] Lab = new float[3];
+
+        XYZ = RGBtoXYZ(r,g,b);
+        Lab = XYZtoLab(XYZ[0],XYZ[1],XYZ[2]);
+
+        return Lab;
+    }
+
+    private float[] RGBtoXYZ(float r, float g, float b)
+    {
+        float[] XYZ = new float[3];
+
+        r = r/255f;
+        g = g/255f;
+        b = b/255f;
+
+        r = r <= 0.04045 ? r/12 : (float)Math.pow((r+0.055)/1.055,2.4);
+        g = g <= 0.04045 ? g/12 : (float)Math.pow((g+0.055)/1.055,2.4);
+        b = b <= 0.04045 ? b/12 : (float)Math.pow((b+0.055)/1.055,2.4);
+
+        XYZ[0] = 0.4360747f*r + 0.3850649f*g + 0.1430804f*b; // X
+        XYZ[1] = 0.2225045f*r + 0.7168786f*g + 0.0606169f*b; // Y
+        XYZ[2] = 0.0139322f*r + 0.0971045f*g + 0.7141733f*b; // Z
+
+        return XYZ;
+    }
+
+    private float[] XYZtoLab(float X, float Y, float Z)
+    {
+        float[] Lab = new float[3];
+        float fx, fy, fz;
+        float xr, yr, zr;
+        float e = 0.008856f;
+        float k = 903.3f;
+
+        xr = X/0.964221f;
+        yr = 1.0f;
+        zr = 0.825211f;
+
+        fx = xr > e ? (float) Math.cbrt(xr) : (k*xr + 16f) / 116f;
+        fy = yr > e ? (float) Math.cbrt(yr) : (k*yr + 16f) / 116f;
+        fz = zr > e ? (float) Math.cbrt(zr) : (k*zr + 16f) / 116f;
+
+        Lab[0] = 116*fy - 16; // L
+        Lab[1] = 500*(fx-fy); // a
+        Lab[2] = 200*(fy-fz); // b
+
+        return Lab;
     }
 
     public int getBitmapPixel(int x,int y)
@@ -139,29 +221,39 @@ public class ColorSensor_ViewImage extends Activity {
         return windowWidth;
     }
 
-    public void setColorText(String s)
+    private void setColorText()
     {
+        String s = "";
+        if(this.isRGB)
+        {
+            s = "Red: " + this.red + "\nGreen: " + this.green + "\nBlue: " + this.blue;
+        }
+        else
+        {
+            s = "L: " + this.L + "\na: " + this.a + "\nb: " + this.b;
+        }
         textView.setText(s);
     }
 
-    public void setColorboxColor(double r, double g, double b)
+    private void setColorboxColor()
     {
-        colorBox.setBackgroundColor(Color.rgb((int) r, (int) g, (int) b));
+        colorBox.setBackgroundColor(Color.rgb((int) this.red, (int) this.green, (int) this.blue));
     }
 
-    public void setRed(float r)
+    public void setColor(float r, float g, float b)
     {
         this.red = r;
-    }
-
-    public void setGreen(float g)
-    {
         this.green = g;
-    }
-
-    public void setBlue(float b)
-    {
         this.blue = b;
+
+        float[] Lab = new float[3];
+        Lab = RGBtoLab(r,g,b);
+        this.L = Lab[0];
+        this.a = Lab[1];
+        this.b = Lab[2];
+
+        setColorboxColor();
+        setColorText();
     }
 
     @Override

@@ -264,13 +264,10 @@ public class DrawView extends ImageView {
                 g = ((float) greens) / numPixels;
                 b = ((float) blues) / numPixels;
 
-                myContext.setColorText("Red: " + r + "\nGreen: " + g + "\nBlue: " + b);
+                //myContext.setColorText("Red: " + r + "\nGreen: " + g + "\nBlue: " + b);
+                //myContext.setColorboxColor(r,g,b);
+                myContext.setColor(r,g,b);
 
-                myContext.setColorboxColor(r,g,b);
-
-                myContext.setRed(r);
-                myContext.setGreen(g);
-                myContext.setBlue(b);
                 break;
         } // switch(eventAction)
         // redraw the canvas
