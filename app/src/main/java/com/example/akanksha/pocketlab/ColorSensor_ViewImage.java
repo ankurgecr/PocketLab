@@ -147,9 +147,9 @@ public class ColorSensor_ViewImage extends Activity {
         catch(IOException e)
         {
             Log.d("ERROR", "File not found: " + e);
-        }
+        } // try/catch
 
-    }
+    } // onCreate()
 
     // conversions from http://www.brucelindbloom.com/
     // assume sRGB
@@ -278,4 +278,4 @@ public class ColorSensor_ViewImage extends Activity {
         super.onStop();
         return;
     }
-}
+} // class ColorSensor_ViewImage

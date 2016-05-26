@@ -60,11 +60,9 @@ public class ColorSensor extends ActionBarActivity {
                         startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
                     }
                 }
-
-
             }
-        });
-    }
+        }); // setOnClickListener()
+    } // onCreate()
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
