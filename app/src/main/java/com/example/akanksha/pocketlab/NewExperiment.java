@@ -106,8 +106,8 @@ public class NewExperiment extends ActionBarActivity {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
                         //return;
-                        String mycsvstring = csvstring(labdata2);
-                        savetocsv(mycsvstring);
+                        //String mycsvstring = csvstring(labdata2);
+                        //savetocsv(mycsvstring);
                     }
                 });
 
@@ -128,7 +128,8 @@ public class NewExperiment extends ActionBarActivity {
                     {
                      //put something here
 
-
+                        String mycsvstring = csvstring(labdata2);
+                        savetocsv(mycsvstring);
                         dialog.dismiss();
                         return;
                     }
