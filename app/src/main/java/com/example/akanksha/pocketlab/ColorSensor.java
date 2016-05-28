@@ -2,8 +2,6 @@ package com.example.akanksha.pocketlab;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -14,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,11 +60,9 @@ public class ColorSensor extends ActionBarActivity {
                         startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
                     }
                 }
-
-
             }
-        });
-    }
+        }); // setOnClickListener()
+    } // onCreate()
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,10 +109,8 @@ public class ColorSensor extends ActionBarActivity {
 
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
-            //Bitmap photo = (Bitmap) data.getExtras().get("output");
             Uri imgUri = Uri.fromFile(photoFile);
-            //Toast.makeText(this,data.getExtras().get("data").toString(),Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(colorSensorSelf, PhotoView.class);
+            Intent intent = new Intent(colorSensorSelf, ColorSensor_ViewImage.class);
             intent.putExtra("imgUri",imgUri.toString());
             startActivity(intent);
         }
@@ -126,5 +119,12 @@ public class ColorSensor extends ActionBarActivity {
     public void clickCapture()
     {
         captureButton.performClick();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(colorSensorSelf, NewExperiment.class);
+        startActivity(intent);
     }
 }

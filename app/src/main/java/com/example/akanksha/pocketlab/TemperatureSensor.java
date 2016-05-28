@@ -180,7 +180,7 @@ public class TemperatureSensor extends AbstractIOIOActivity {
         currentTemp = temp;
     }
 
-    private void toast(final String message) {
+    public void toast(final String message) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -201,6 +201,11 @@ public class TemperatureSensor extends AbstractIOIOActivity {
     public String getUnits()
     {
         return units;
+    }
+
+    public boolean isMeasuring()
+    {
+        return measureTemp;
     }
 
     public void toggleUnits()
