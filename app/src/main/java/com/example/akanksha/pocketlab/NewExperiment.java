@@ -2,11 +2,13 @@ package com.example.akanksha.pocketlab;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.Menu;
@@ -16,7 +18,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.text.SpannableString;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 
@@ -68,17 +76,10 @@ public class NewExperiment extends ActionBarActivity {
             public void onClick(View v) {
                 final AlertDialog.Builder alert = new AlertDialog.Builder(newExpSelf);
 
-                //alert.setTitle("Title");
                 alert.setTitle("Are you sure you want to save the following lab?");
-                //alert.setMessage("");
 
                 // Set an EditText view to get user input
                 TextView expinfo = new TextView(newExpSelf);
-                /*String s1= "Hello Everyone";
-                SpannableString ss1=  new SpannableString(s1);
-                ss1.setSpan(new RelativeSizeSpan(2f), 0,5, 0); // set size
-                ss1.setSpan(new ForegroundColorSpan(Color.RED), 0, 5, 0);// set color */
-                String displaystring = "\n";
 
                 AllInfoSQL s = new AllInfoSQL(MainActivity.exptime);
                 ArrayList<String> labdata = new ArrayList<String>();
@@ -90,9 +91,10 @@ public class NewExperiment extends ActionBarActivity {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-                for (int i = 0; i < labdata.size(); i++ ){
-                    displaystring += labdata.get(i) + "\n";
-                }
+
+                SpannableString displaystring = displayspan(labdata);
+
+                final ArrayList<String> labdata2 = labdata;
 
                 expinfo.setText(displaystring);
                 //expinfo.setFocusable(false);
@@ -104,6 +106,8 @@ public class NewExperiment extends ActionBarActivity {
                     public void onClick(DialogInterface dialog, int whichButton)
                     {
                         //return;
+                        String mycsvstring = csvstring(labdata2);
+                        savetocsv(mycsvstring);
                     }
                 });
 
@@ -170,18 +174,72 @@ public class NewExperiment extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void savetocsv(String dataval){
+    public void savetocsv(String dataval){ //saves a string to a csv file
+        //get file path
+        File path = this.getFilesDir();
 
+        //get time for the name of the csv
+        long currenttime = System.currentTimeMillis();
+        DateFormat df = new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss");
+        Date expdate = new Date(currenttime);
+        String reportDate = df.format(expdate);
+
+        //save file name as user plus the saving time
+        String filename = MainActivity.currentUser + reportDate + ".csv";
+        File myfile = new File(path,filename);
+
+        try {
+            FileOutputStream outputstream = openFileOutput(String.valueOf(myfile), Context.MODE_WORLD_WRITEABLE);
+            outputstream.write(dataval.getBytes());
+            outputstream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public String csvstring(ArrayList<String> datavals){
+    public String csvstring(ArrayList<String> datafromsql){ //get the string to save to a csv
+        //Basic version with just a columnname and data
         String datastring = "";
+
+        for (int i = 0; i < datafromsql.size(); i+=2){
+            datastring += datafromsql.get(i) + ",";
+        }
+
+        datastring += "\n";
+
+        for (int i = 1; i < datafromsql.size(); i+=2){
+            datastring += datafromsql.get(i) + ",";
+        }
 
         return datastring;
     }
 
-    public String displayspan(){
-        String displaystring = "";
+    public SpannableString displayspan(ArrayList<String> datafromsql){ //get the string to display
+
+        SpannableString displaystring = new SpannableString("");
+
+        for (int i = 0; i < datafromsql.size(); i++ ){
+        //int i=0;
+
+            String tempstr = datafromsql.get(i) + "\n";
+            SpannableString tempspan = new SpannableString(tempstr);
+
+            if (i % 2 == 0){ //even, or titles of sections
+                tempspan.setSpan(new RelativeSizeSpan(1.25f), 0,tempstr.length() - 1, 0);
+                tempspan.setSpan(new ForegroundColorSpan(Color.BLUE), 0, tempstr.length() - 1, 0);
+            }
+
+            displaystring = new SpannableString(TextUtils.concat(displaystring,tempspan));
+
+        }
+
+        /*String tempstr1 = "";
+
+        for (int i = 0; i < datafromsql.size(); i++ ){
+           tempstr1 += datafromsql.get(i) + "\n";
+        }
+
+        displaystring = new SpannableString(tempstr1);*/
 
         return displaystring;
     }
