@@ -25,6 +25,9 @@ public class ColorSensor extends ActionBarActivity {
     static int REQUEST_IMAGE_CAPTURE = 1;
 
     Button captureButton;
+    Button sensorMenuButton;
+
+    Activity newExpSelf = this;
     Activity colorSensorSelf = this;
     //private Camera mCamera = null;
     private CameraView mCameraView = null;
@@ -62,6 +65,15 @@ public class ColorSensor extends ActionBarActivity {
                 }
             }
         }); // setOnClickListener()
+
+        sensorMenuButton = (Button) findViewById(R.id.sensors_button);
+        sensorMenuButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(newExpSelf, NewExperiment.class);
+                startActivity(intent);
+            }
+        });
     } // onCreate()
 
     @Override

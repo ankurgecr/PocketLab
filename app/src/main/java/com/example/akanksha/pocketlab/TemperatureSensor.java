@@ -14,28 +14,33 @@
 
 package com.example.akanksha.pocketlab;
 
-import java.util.concurrent.ExecutionException;
-
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.concurrent.ExecutionException;
 
 import ioio.lib.api.AnalogInput;
 import ioio.lib.api.DigitalOutput;
 import ioio.lib.api.DigitalOutput.Spec.Mode;
 import ioio.lib.api.exception.ConnectionLostException;
 import ioio.lib.util.AbstractIOIOActivity;
-import android.content.Context;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 
 public class TemperatureSensor extends AbstractIOIOActivity {
 
     Button newDataButton;
     Button saveDataButton;
+    Button sensorMenuButton;
+
+    Activity newExpSelf = this;
 
     private final static long SAMPLE_PERIOD = 10000; // 10 seconds
     private static final int PLUS_PIN = 28;//44;
@@ -67,6 +72,15 @@ public class TemperatureSensor extends AbstractIOIOActivity {
             @Override
             public void onClick(View v) {
                 logTemp();
+            }
+        });
+
+        sensorMenuButton = (Button) findViewById(R.id.sensors_button);
+        sensorMenuButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(newExpSelf, NewExperiment.class);
+                startActivity(intent);
             }
         });
 

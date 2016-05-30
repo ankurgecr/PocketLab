@@ -3,8 +3,13 @@
     <string name="title_activity_main">MainActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="login_button">Login</string>
+    <string name="new_user_button">Create New User</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+
     <string name="action_settings">Settings</string>
-    <string name="title_activity_splash">SplashScreen</string>
+    <string name="title_activity_splash">PocketLab</string>
     <string name="title_activity_home_screen">HomeScreen</string>
     <string name="title_activity_new_experiment">NewExperiment</string>
     <string name="title_activity_color_sensor">ColorSensor</string>
@@ -15,4 +20,23 @@
     <string name="title_activity_temperature_sensor_board">TemperatureSensorBoard</string>
     <string name="title_activity_ambient_sensor">AmbientSensor</string>
     <string name="title_activity_photo_view">PhotoView</string>
+
+    <string name="color_sensor_title">Color</string>
+    <string name="camera_capture_title">Capture</string>
+    <string name="temp_sensor_title">Temperature</string>
+    <string name="ambi_light_sensor_title">Ambient Light</string>
+    <string name="accel_sensor_title">Accelerometer</string>
+    <string name="humidity_sensor_title">Humidity</string>
+
+    <string name="new_exp_title">New Experiment</string>
+    <string name="saved_sessions_title">Saved Sessions</string>
+    <string name="save_to_csv_title">Save to CSV</string>
+    <string name="home_title">Home</string>
+    <string name="sensors_pg_title">Sensors</string>
+    <string name="new_data_title">New Data</string>
+    <string name="save_data_title">Save Data</string>
+    <string name="guide_button_title">Guide</string>
+    <string name="logout_button_title">Logout</string>
+    <string name="view_data_title">View Saved Data</string>
+    <string name="empty_image_description">to create space for UI purposes</string>
 </resources>

@@ -8,9 +8,8 @@
                 android:centerColor="#c8f8f7fa"
                 android:endColor="#c8bfbdc2"/>
 
-
             <corners
-                android:radius="25dp"/>
+                android:radius="5dp"/>
 
 
         </shape>
@@ -25,7 +24,7 @@
                 android:endColor="#bfbdc2"/>
 
             <corners
-                android:radius="25dp"/>
+                android:radius="5dp"/>
 
         </shape>
     </item>

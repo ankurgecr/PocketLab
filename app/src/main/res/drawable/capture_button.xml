@@ -3,30 +3,24 @@
     <item android:state_pressed="true" >
         <shape
             android:shape="rectangle">
-            <gradient
-                android:startColor="#c8aeadb0"
-                android:centerColor="#c8f8f7fa"
-                android:endColor="#c8bfbdc2"/>
-
-
             <corners
-                android:radius="25dp"/>
-
+                android:radius="5dp"
+                />
+            <solid
+                android:color="#8beef0f5" />
 
         </shape>
     </item>
     <item>
         <shape
             android:shape="rectangle">
-
             <gradient
-                android:startColor="#aeadb0"
-                android:centerColor="#f8f7fa"
-                android:endColor="#bfbdc2"/>
-
+                android:startColor="#aa8f9190"
+                android:centerColor="#aaf2f4f3"
+                android:endColor="#aaaeafb0"/>
             <corners
-                android:radius="25dp"/>
-
+                android:radius="5dp"
+                />
         </shape>
     </item>
 </selector>
