@@ -195,7 +195,7 @@ public class NewExperiment extends ActionBarActivity {
             FileOutputStream outputstream = openFileOutput("hello", Context.MODE_WORLD_WRITEABLE);
             outputstream.write("hi".getBytes());
             outputstream.close();
-            Log.d("DEBUG", "Saving");
+            Log.d("DEBUG", "Saving2");
         } catch (Exception e) {
             e.printStackTrace();
             Log.d("DEBUG", "not saving");
