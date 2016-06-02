@@ -107,6 +107,11 @@
             android:name=".DisplayExpData"
             android:label="@string/title_activity_display_exp_data" >
         </activity>
+        <activity
+            android:name=".GuidePage"
+            android:label="@string/title_activity_guide_page">
+        </activity>
+
     </application>
 
 </manifest>

@@ -27,7 +27,7 @@
         android:text="@string/saved_sessions_title"
         android:textColor="#6d6b6b"
         android:id="@+id/existing_experiment_button"
-        android:layout_above="@+id/button2"
+        android:layout_above="@+id/guide_button"
         android:layout_centerHorizontal="true"/>
     <Button
         style="@style/button_text"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:text="@string/guide_button_title"
         android:textColor="#6d6b6b"
-        android:id="@+id/button2"
+        android:id="@+id/guide_button"
         android:background="@drawable/new_exp_button"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />

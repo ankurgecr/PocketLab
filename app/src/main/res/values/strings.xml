@@ -20,6 +20,7 @@
     <string name="title_activity_temperature_sensor_board">TemperatureSensorBoard</string>
     <string name="title_activity_ambient_sensor">AmbientSensor</string>
     <string name="title_activity_photo_view">PhotoView</string>
+    <string name="title_activity_guide_page">GuidePage</string>
 
     <string name="color_sensor_title">Color</string>
     <string name="camera_capture_title">Capture</string>

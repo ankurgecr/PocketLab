@@ -4,22 +4,20 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.concurrent.ExecutionException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 
-public class HomeScreen extends Activity {
+public class HomeScreen extends ActionBarActivity {
     Button newExpButton;
     Button existingExpButton;
 
@@ -37,6 +35,7 @@ public class HomeScreen extends Activity {
 
         newExpButton = (Button) findViewById(R.id.new_experiment_button);
         existingExpButton = (Button) findViewById(R.id.existing_experiment_button);
+        guideButton = (Button) findViewById(R.id.guide_button);
         logoutButton = (Button) findViewById(R.id.logout_button);
 
         /*newExpButton.setOnClickListener(new View.OnClickListener() {
@@ -81,21 +80,20 @@ public class HomeScreen extends Activity {
                 final AlertDialog dialog = alert.create();
                 dialog.show();
 
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
-                {
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
                     {
                         final String exp = input.getText().toString();
+
                         boolean success = false;
 
-                        if(exp.length() >= 40) {
+                        if (exp.length() >= 40) {
                             dialog.setMessage("Too long, must not exceed 40 characters");
                         }
                         if (exp.equals("")) {
                             dialog.setMessage("Experiment must have a name");
-                        }
-                        else{
+                        } else {
                             NewExperimentSQL s = new NewExperimentSQL();
                             s.execute(MainActivity.currentUser, exp);
                             String result = null;
@@ -115,7 +113,6 @@ public class HomeScreen extends Activity {
 
                                 dialog2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
-                                        experimentName = exp;
                                         Intent intent = new Intent(mSelf, NewExperiment.class);
                                         startActivity(intent);
                                     }
@@ -180,14 +177,18 @@ public class HomeScreen extends Activity {
             }
         });
 
-
-        logoutButton.setOnClickListener(new View.OnClickListener()
-        {
+        guideButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v){
+                Intent intent = new Intent(mSelf, GuidePage.class);
+                startActivity(intent);
+            }
+        });
+
+        logoutButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
                 MainActivity.currentUser = "";
-                
                 Intent intent = new Intent(mSelf, MainActivity.class);
                 startActivity(intent);
             }
@@ -200,3 +201,4 @@ public class HomeScreen extends Activity {
         // do nothing
     }
 }
+

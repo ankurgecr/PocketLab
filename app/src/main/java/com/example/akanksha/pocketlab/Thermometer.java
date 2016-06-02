@@ -1,7 +1,5 @@
 package com.example.akanksha.pocketlab;
 
-import android.app.Activity;
-
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -27,7 +25,7 @@ public class Thermometer extends PApplet {
     @Override
     public void settings()
     {
-        size(1000, 1280);
+        size(width-100, height-100);
     }
 
     @Override
@@ -100,7 +98,7 @@ public class Thermometer extends PApplet {
         noStroke();
         fill(255);
         rect(440, 225, 120, 700);
-
+        //rect(width/)
         noStroke();
         fill(21,66,245);
         ellipse(500, 925, 225, 225);

@@ -10,8 +10,8 @@ public class AmbientBulbs extends PApplet {
 
     PFont font;
 
-    int lumens = 1775;      //input lumens from sensor
-    int MAX_LUMENS = 6400;  //determines matrix size (sqrt(MAX_LUMENS),sqrt(MAX_LUMENS))
+    int lumens = 17750;      //input lumens from sensor
+    int MAX_LUMENS = 64000;  //determines matrix size (sqrt(MAX_LUMENS),sqrt(MAX_LUMENS))
     //matrix must always be a square value and a multiple of a 100
     //one bulb = 100 lumens
 
@@ -21,9 +21,10 @@ public class AmbientBulbs extends PApplet {
 
     int lit_bulbs = 0;      //number of bulbs that need to be lit
     int bulbs = 0;          //number of bulbs that are lit
-    int inc, radius;        //increment value of bulb positions and bulb radius size
+    int inc;
+    float radius;        //increment value of bulb positions and bulb radius size
     int startX, startY;     //(0,0) bulb position in matrix
-    int expand = 1;         //expanding value of light radius when a bulb is being lit; depends on i and radius
+    float expand = 1;         //expanding value of light radius when a bulb is being lit; depends on i and radius
     int i = 1;
 
     int dimness = 0;
@@ -41,14 +42,13 @@ public class AmbientBulbs extends PApplet {
 
         background(0);
 
-        lit_bulbs = lumens/100;
+        lit_bulbs = lumens/1000;
 
-        dimness = lumens%100;
-
+        dimness = lumens%1000;
 
         if (dimness > 0)
         {
-            dim_value = dimness/20;
+            dim_value = dimness/200;
             lit_bulbs++;
         }//there is a bulb lit at below 100 lumens
 
@@ -57,20 +57,20 @@ public class AmbientBulbs extends PApplet {
             lit_bulbs = 1;
         }//there is a single bulb to be turned on
 
-        if(lit_bulbs>(MAX_LUMENS/100))
+        if(lit_bulbs>(MAX_LUMENS/1000))
         {
             dim_value = 5;
-            lit_bulbs = MAX_LUMENS/100;
+            lit_bulbs = MAX_LUMENS/1000;
         }//the input lumens is greater than the max number of available bulbs
 
         //print("lit_bulbs"+lit_bulbs+" ");
-        if(MAX_LUMENS <= 100)
+        if(MAX_LUMENS <= 1000)
             m_size = 1;      //build a 1x1 matrix if MAX_LUMENS is below the max lumen of one bulb
         else
-            m_size = round(sqrt(MAX_LUMENS/100));
+            m_size = round(sqrt(MAX_LUMENS/1000));
 
-        inc = 150;
-        radius = (width/(width/1000))/12;
+        inc = 100;
+        radius = (width/(float)((width/1000)))/15;
         expand = i*(radius/5);
 
         if (m_size == 1) //for single bulb place it in center of canvas
@@ -102,7 +102,7 @@ public class AmbientBulbs extends PApplet {
         textAlign(CENTER);
         fill(255);
         textSize(75);
-        text(lumens + " lumens", width / 2, height / 16);
+        text(lumens + " lumens", width/2, height/16);
         if(lumens > 0)
         {
             if(lit_bulbs==1)
@@ -186,7 +186,7 @@ public class AmbientBulbs extends PApplet {
         }//if there is a lumens value
     }
 
-    void Bulb(int x, int y, int r, int c)
+    void Bulb(float x, float y, float r, int c)
     {
         if (c == 0)
             fill(255,255,255,50);
@@ -225,7 +225,7 @@ public class AmbientBulbs extends PApplet {
         textAlign(CENTER);
         fill(255);
         textSize(40);
-        text(">20L", firstX + (4 * inc), height - 5);
+        text(">200L", firstX + (4 * inc), height - 5);
 
         Bulb(firstX + (3 * inc), height - (radius + 5), radius, 0);
         Bulb(firstX + (3 * inc), height - (radius + 5), (radius / 5), 1);
@@ -233,7 +233,7 @@ public class AmbientBulbs extends PApplet {
         textAlign(CENTER);
         fill(255);
         textSize(40);
-        text(">40L", firstX + (3 * inc), height - 5);
+        text(">400L", firstX + (3 * inc), height - 5);
 
         Bulb(firstX + (2 * inc), height - (radius + 5), radius, 0);
         Bulb(firstX + (2 * inc), height - (radius + 5), (radius / 5), 1);
@@ -242,7 +242,7 @@ public class AmbientBulbs extends PApplet {
         textAlign(CENTER);
         fill(255);
         textSize(40);
-        text(">60L",firstX+(2*inc),height-5);
+        text(">600L",firstX+(2*inc),height-5);
 
         Bulb(firstX+(inc),height-(radius+5),radius,0);
         Bulb(firstX+(inc),height-(radius+5),(radius/5),1);
@@ -252,7 +252,7 @@ public class AmbientBulbs extends PApplet {
         textAlign(CENTER);
         fill(255);
         textSize(40);
-        text(">80L",firstX+(inc),height-5);
+        text(">800L",firstX+(inc),height-5);
 
         Bulb(firstX,height-(radius+5),radius,1);
         Bulb(firstX,height-(radius+5),(radius/5),1);
@@ -262,8 +262,7 @@ public class AmbientBulbs extends PApplet {
         textAlign(CENTER);
         fill(255);
         textSize(40);
-        text("100L",firstX,height-5);
-
+        text("1000L",firstX,height-5);
 
     }//drawScale()
 
