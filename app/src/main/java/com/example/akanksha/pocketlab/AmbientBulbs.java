@@ -6,11 +6,14 @@ import processing.core.PFont;
 /**
  * Created by asingh95 on 5/2/2016.
  */
-public class AmbientBulbs extends PApplet {
+public class AmbientBulbs extends PApplet
+{
+    AmbientSensor myActivity;
 
     PFont font;
 
     int lumens = 17750;      //input lumens from sensor
+
     int MAX_LUMENS = 64000;  //determines matrix size (sqrt(MAX_LUMENS),sqrt(MAX_LUMENS))
     //matrix must always be a square value and a multiple of a 100
     //one bulb = 100 lumens
@@ -37,6 +40,9 @@ public class AmbientBulbs extends PApplet {
 
     public void setup()
     {
+
+        myActivity = (AmbientSensor) getActivity();
+
         font = createFont("sans-serif-light",56);
         textFont(font);
 
@@ -96,6 +102,8 @@ public class AmbientBulbs extends PApplet {
 
     public void draw()
     {
+        lumens = (int) myActivity.getCurrentLumens();
+
         frameRate(5);
         //color on;
         //on = color(255,231,22,255-(40*i));

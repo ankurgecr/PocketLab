@@ -48,6 +48,7 @@ public class Thermometer extends PApplet {
     public void draw()
     {
         input_degree = myActivity.getCurrentTemp();
+
         background(11, 34, 127);
         thermoScale();
         drawTempMarker();
