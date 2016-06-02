@@ -109,9 +109,12 @@
         </activity>
         <activity
             android:name=".GuidePage"
-            android:label="@string/title_activity_guide_page">
+            android:label="@string/title_activity_guide_page" >
         </activity>
-
+        <activity
+            android:name=".VariableSensorAct"
+            android:label="@string/title_activity_variable_sensor" >
+        </activity>
     </application>
 
 </manifest>

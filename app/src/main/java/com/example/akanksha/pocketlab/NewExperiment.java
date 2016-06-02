@@ -39,6 +39,7 @@ public class NewExperiment extends Activity {
     //Button accelButton;
     Button ambiButton;
     Button homeButton;
+    Button variButton;
     TextView titleTextView;
 
     Button viewdataButton;
@@ -59,6 +60,7 @@ public class NewExperiment extends Activity {
         homeButton = (Button) findViewById(R.id.home_button);
         viewdataButton = (Button) findViewById(R.id.view_data_button);
         titleTextView = (TextView) findViewById(R.id.titleTextView);
+        variButton = (Button) findViewById(R.id.variable_sensor);
 
         titleTextView.setText(HomeScreen.experimentName);
 
@@ -146,6 +148,14 @@ public class NewExperiment extends Activity {
                         return;
                     }
                 });
+            }
+        });
+
+        variButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(newExpSelf, VariableSensorAct.class);
+                startActivity(intent);
             }
         });
 
