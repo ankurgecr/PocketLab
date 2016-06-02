@@ -59,7 +59,14 @@ public class AmbientSensor extends AbstractIOIOActivity
         saveDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logLumens();
+                if(isMeasuring())
+                {
+                    toast("Please wait for measurement to complete.");
+                }
+                else
+                {
+                    logLumens();
+                }
             }
         });
 
@@ -197,6 +204,19 @@ public class AmbientSensor extends AbstractIOIOActivity
     public boolean isMeasuring()
     {
         return measureLumens;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if(isMeasuring())
+        {
+            toast("Please wait for measurement to complete.");
+        }
+        else
+        {
+            super.onBackPressed();
+        }
     }
 
 } // class TemperatureSensor
