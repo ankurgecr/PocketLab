@@ -57,7 +57,7 @@
     <string name="guide_page_sensors_title">Available Sensors</string>
     <string name="guide_page_sensors_title_content">The following describes the current available sensors on our app.</string>
     <string name="guide_page_color_sensor_title">Color</string>
-    <string name="guide_page_color_sensor_title_content">he color sensor utilizes a custom camera that allows you to take an image and create a field where you can select any pixels within the created frame and retrieve the RGB and LGB color value. Such feature is great for determining if your fruit is ripe enough for a delicious bite.</string>
+    <string name="guide_page_color_sensor_title_content">The color sensor utilizes a custom camera that allows you to take an image and create a field where you can select any pixels within the created frame and retrieve the RGB and LGB color value. Such feature is great for determining if your fruit is ripe enough for a delicious bite.</string>
     <string name="guide_page_temp_sensor_title">Temperature</string>
     <string name="guide_page_temp_sensor_title_content">Ever wonder what the current temperature is in your environment? Simply select this sensor and find out. The sensor also has cool graphical representation of your temperature value.</string>
     <string name="guide_page_ambient_sensor_title">Ambient Light</string>
