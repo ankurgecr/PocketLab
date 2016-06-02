@@ -67,6 +67,16 @@
             android:layout_margin="20dp"
             />
 
+        <Button
+            style="@style/button_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Variable Sensor"
+            android:background="@drawable/empty_button"
+            android:id="@+id/variable_sensor"
+            android:layout_margin="20dp"
+            />
+
         <ImageView
             android:contentDescription="@string/empty_image_description"
             android:layout_width="100dp"
@@ -92,13 +102,5 @@
             android:id="@+id/view_data_button"
             android:layout_margin="20dp"/>
 
-        <Button
-            style="@style/button_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/view_data_title"
-            android:background="@drawable/empty_button"
-            android:id="@+id/variable_sensor"
-            android:layout_margin="20dp"/>
-    </LinearLayout>
+        </LinearLayout>
 </ScrollView>

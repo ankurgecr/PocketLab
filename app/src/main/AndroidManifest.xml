@@ -115,6 +115,10 @@
             android:name=".VariableSensorAct"
             android:label="@string/title_activity_variable_sensor" >
         </activity>
+        <activity
+            android:name=".VariSensor"
+            android:label="@string/title_activity_vari_sensor" >
+        </activity>
     </application>
 
 </manifest>
