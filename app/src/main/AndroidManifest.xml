@@ -16,8 +16,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera" />
-    <!--<uses-feature android:name="android.hardware.camera.autofocus" />-->
-    <!-- <uses-feature android:name="android.hardware.camera.autowhitebalance" />-->
+    <!-- <uses-feature android:name="android.hardware.camera.autofocus" /> -->
+    <!-- <uses-feature android:name="android.hardware.camera.autowhitebalance" /> -->
     <uses-feature android:name="android.hardware.screen.portrait" />
 
     <application
@@ -32,24 +32,23 @@
         <activity
             android:name=".SplashScreen"
             android:label="@string/title_activity_splash"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
-
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen"
@@ -103,6 +102,10 @@
             android:name=".AmbientSensor"
             android:label="@string/title_activity_ambient_sensor"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".DisplayExpData"
+            android:label="@string/title_activity_display_exp_data" >
         </activity>
     </application>
 

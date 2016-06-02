@@ -42,6 +42,7 @@ public class NewExperiment extends ActionBarActivity {
     //Button accelButton;
     Button ambiButton;
     Button homeButton;
+    Button viewdataButton;
 
     Button viewSavedDataButton;
 
@@ -59,6 +60,7 @@ public class NewExperiment extends ActionBarActivity {
         //accelButton = (Button) findViewById(R.id.accel_button);
         ambiButton = (Button) findViewById(R.id.ambient_button);
         homeButton = (Button) findViewById(R.id.home_button);
+        viewdataButton = (Button) findViewById(R.id.view_data_button);
 
         temperatureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,13 +70,6 @@ public class NewExperiment extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-        /*humidityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(newExpSelf, HumiditySensor.class);
-                startActivity(intent);
-            }
-        });*/
         colorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +103,6 @@ public class NewExperiment extends ActionBarActivity {
                 final ArrayList<String> labdata2 = labdata;
 
                 expinfo.setText(displaystring);
-                //expinfo.setFocusable(false);
                 alert.setView(expinfo);
 
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener()
@@ -147,13 +141,7 @@ public class NewExperiment extends ActionBarActivity {
                 });
             }
         });
-        /*accelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(newExpSelf, AccelSensor.class);
-                startActivity(intent);
-            }
-        });*/
+
         ambiButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -169,6 +157,17 @@ public class NewExperiment extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+        viewdataButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                Intent intent = new Intent(newExpSelf, DisplayExpData.class);
+                startActivity(intent);
+
+            }
+        });
+
 
     }
 
@@ -305,14 +304,6 @@ public class NewExperiment extends ActionBarActivity {
             displaystring = new SpannableString(TextUtils.concat(displaystring,tempspan));
 
         }
-
-        /*String tempstr1 = "";
-
-        for (int i = 0; i < datafromsql.size(); i++ ){
-           tempstr1 += datafromsql.get(i) + "\n";
-        }
-
-        displaystring = new SpannableString(tempstr1);*/
 
         return displaystring;
     }
