@@ -50,9 +50,16 @@ public class AmbientSensor extends AbstractIOIOActivity
         newDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+                if(isMeasuring())
+                {
+                    toast("Please wait for measurement to complete.");
+                }
+                else
+                {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
             }
         });
         saveDataButton = (Button) findViewById(R.id.save_data_button);
@@ -147,12 +154,12 @@ public class AmbientSensor extends AbstractIOIOActivity
         Long lumensTime =  System.currentTimeMillis();
         String newdatastr = lumensTime + ":" + currentLumens + ":" + units + ";";
         SaveDataPointSQL s = new SaveDataPointSQL(MainActivity.exptime);
-        s.execute(MainActivity.currentUser, "Lumens",newdatastr);
+        s.execute(MainActivity.currentUser, "light",newdatastr);
         try {
             if (s.get().equals("Works"))
             {
                 Log.d("DEBUG","Saved new lumens");
-                toast("Saved " + currentLumens + units);
+                toast("Saved " + currentLumens + " " + units);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
