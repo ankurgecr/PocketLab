@@ -35,6 +35,7 @@ public class HomeScreen extends ActionBarActivity {
 
         newExpButton = (Button) findViewById(R.id.new_experiment_button);
         existingExpButton = (Button) findViewById(R.id.existing_experiment_button);
+        logoutButton = (Button) findViewById(R.id.logout_button);
 
         /*newExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,6 +172,19 @@ public class HomeScreen extends ActionBarActivity {
                     }
                 });
                 builder.show();
+            }
+        });
+
+
+        logoutButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                MainActivity.currentUser = "";
+                
+                Intent intent = new Intent(mSelf, MainActivity.class);
+                startActivity(intent);
             }
         });
     }

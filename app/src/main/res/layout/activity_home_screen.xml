@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:text="@string/logout_button_title"
         android:textColor="#ff0000"
-        android:id="@+id/button3"
+        android:id="@+id/logout_button"
         android:background="@drawable/new_exp_button"
         android:layout_marginBottom="25dp"
         android:layout_alignParentBottom="true"
