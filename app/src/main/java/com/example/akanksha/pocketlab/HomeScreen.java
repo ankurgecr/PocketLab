@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 
-public class HomeScreen extends ActionBarActivity {
+public class HomeScreen extends Activity {
     Button newExpButton;
     Button existingExpButton;
 

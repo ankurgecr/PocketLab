@@ -10,7 +10,7 @@ import android.widget.Button;
 /**
  * Created by asingh95 on 6/1/2016.
  */
-public class GuidePage extends ActionBarActivity {
+public class GuidePage extends Activity {
 
     Activity newExpSelf = this;
     Button homeButton;
