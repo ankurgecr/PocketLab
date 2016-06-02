@@ -7,26 +7,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +35,6 @@ public class NewExperiment extends ActionBarActivity {
     //Button accelButton;
     Button ambiButton;
     Button homeButton;
-    Button viewdataButton;
 
     Button viewSavedDataButton;
 
@@ -61,6 +53,9 @@ public class NewExperiment extends ActionBarActivity {
         ambiButton = (Button) findViewById(R.id.ambient_button);
         homeButton = (Button) findViewById(R.id.home_button);
         viewdataButton = (Button) findViewById(R.id.view_data_button);
+        titleTextView = (TextView) findViewById(R.id.titleTextView);
+
+        titleTextView.setText(HomeScreen.experimentName);
 
         temperatureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +65,13 @@ public class NewExperiment extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+        /*humidityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(newExpSelf, HumiditySensor.class);
+                startActivity(intent);
+            }
+        });*/
         colorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

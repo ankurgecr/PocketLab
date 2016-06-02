@@ -19,12 +19,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 
-public class HomeScreen extends ActionBarActivity {
+public class HomeScreen extends Activity {
     Button newExpButton;
     Button existingExpButton;
 
     Button guideButton;
     Button logoutButton;
+
+    public static String experimentName;
 
     Activity mSelf = this;
 
@@ -84,7 +86,7 @@ public class HomeScreen extends ActionBarActivity {
                     @Override
                     public void onClick(View v)
                     {
-                        String exp = input.getText().toString();
+                        final String exp = input.getText().toString();
                         boolean success = false;
 
                         if(exp.length() >= 40) {
@@ -113,6 +115,7 @@ public class HomeScreen extends ActionBarActivity {
 
                                 dialog2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
+                                        experimentName = exp;
                                         Intent intent = new Intent(mSelf, NewExperiment.class);
                                         startActivity(intent);
                                     }
@@ -159,6 +162,7 @@ public class HomeScreen extends ActionBarActivity {
                     clickablenames.add(expnames.get(i)+"     "+reportDate);
                 }
                 final ArrayList<String> exptimes2 = exptimes;
+                final ArrayList<String> expnames2 = expnames;
                 CharSequence[] charclick = clickablenames.toArray(new CharSequence[clickablenames.size()]);
                 AlertDialog.Builder builder = new AlertDialog.Builder(mSelf);
                 builder.setTitle("Choose an existing experiment");
@@ -167,6 +171,7 @@ public class HomeScreen extends ActionBarActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // the user clicked on colors[which]
                         MainActivity.exptime = Long.parseLong(exptimes2.get(which));
+                        experimentName = expnames2.get(which);
                         Intent intent = new Intent(mSelf, NewExperiment.class);
                         startActivity(intent);
                     }
@@ -187,28 +192,6 @@ public class HomeScreen extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home_screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

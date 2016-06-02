@@ -15,6 +15,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="New Experiment"
+            android:textColor="#ffffff"
+            android:id="@+id/titleTextView"
+            android:layout_gravity="center_horizontal"
+            android:textSize="30dp" />
+
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
