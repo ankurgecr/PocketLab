@@ -41,4 +41,5 @@
     <string name="view_data_title">View Saved Data</string>
     <string name="empty_image_description">to create space for UI purposes</string>
     <string name="title_activity_display_exp_data">DisplayExpData</string>
+    <string name="title_activity_variable_sensor">VariableSensorAct</string>
 </resources>
