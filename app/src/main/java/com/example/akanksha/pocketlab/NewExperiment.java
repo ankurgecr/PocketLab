@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -178,6 +179,7 @@ public class NewExperiment extends ActionBarActivity {
     public void savetocsv(String dataval){ //saves a string to a csv file
         //get file path
         File path = this.getFilesDir();
+        Log.d("DEBUG", path.getAbsolutePath());
 
         //get time for the name of the csv
         long currenttime = System.currentTimeMillis();
@@ -187,14 +189,17 @@ public class NewExperiment extends ActionBarActivity {
 
         //save file name as user plus the saving time
         String filename = MainActivity.currentUser + reportDate + ".csv";
-        File myfile = new File(path,filename);
+        //File myfile = new File(path,filename);
 
         try {
-            FileOutputStream outputstream = openFileOutput(String.valueOf(myfile), Context.MODE_WORLD_WRITEABLE);
-            outputstream.write(dataval.getBytes());
+            FileOutputStream outputstream = openFileOutput("hello", Context.MODE_WORLD_WRITEABLE);
+            outputstream.write("hi".getBytes());
             outputstream.close();
+            Log.d("DEBUG", "Saving");
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d("DEBUG", "not saving");
+
         }
     }
 
