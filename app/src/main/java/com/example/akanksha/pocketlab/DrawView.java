@@ -109,7 +109,7 @@ public class DrawView extends ImageView {
             ColorBall ball = colorballs.get(i);
             canvas.drawBitmap(ball.getBitmap(), ball.getX(), ball.getY(),
                     paint);
-            canvas.drawText("" + (i), ball.getX(), ball.getY(), paint);
+            //canvas.drawText("" + (i), ball.getX(), ball.getY(), paint);
         }
     } // onDraw()
 
