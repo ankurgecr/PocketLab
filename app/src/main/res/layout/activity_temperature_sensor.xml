@@ -13,17 +13,34 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="85dp"
         android:layout_height="wrap_content"
-        android:text="New Data"
+        android:text="@string/new_data_title"
+        android:textSize="12sp"
+        android:textColor="#5f5e5e"
         android:id="@+id/new_data_button"
-        android:layout_gravity="left|bottom" />
+        android:layout_gravity="start|bottom"
+        android:background="@drawable/new_data_button"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="85dp"
         android:layout_height="wrap_content"
-        android:text="Save Data"
+        android:text="@string/save_data_title"
+        android:textColor="#5f5e5e"
         android:id="@+id/save_data_button"
-        android:layout_gravity="right|bottom" />
+        android:textSize="12sp"
+        android:layout_gravity="end|bottom"
+        android:background="@drawable/new_data_button"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:text="@string/sensors_pg_title"
+        android:textSize="12sp"
+        android:textColor="#5f5e5e"
+        android:id="@+id/sensors_button"
+        android:background="@drawable/main_menu_button"
+        android:layout_gravity="start|top" />
 </FrameLayout>
