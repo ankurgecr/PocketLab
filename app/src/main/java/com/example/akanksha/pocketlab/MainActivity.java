@@ -195,7 +195,7 @@ public class MainActivity extends Activity {
                 {
                     resultArea.setText("Re-try");
                 }
-                else
+                else if(value.equals("works"))
                 {
                     resultArea.setText("Account created!");
                     currentUser = loginname;

@@ -48,8 +48,11 @@ public class AmbientBulbs extends PApplet
 
         background(0);
 
-        lit_bulbs = lumens/1000;
+        while(myActivity.isMeasuring());
 
+        lumens = (int) myActivity.getCurrentLumens();
+
+        lit_bulbs = lumens/1000;
         dimness = lumens%1000;
 
         if (dimness > 0)
@@ -102,7 +105,7 @@ public class AmbientBulbs extends PApplet
 
     public void draw()
     {
-        lumens = (int) myActivity.getCurrentLumens();
+        //lumens = (int) myActivity.getCurrentLumens();
 
         frameRate(5);
         //color on;
