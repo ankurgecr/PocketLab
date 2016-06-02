@@ -22,6 +22,10 @@ import java.text.SimpleDateFormat;
 public class HomeScreen extends ActionBarActivity {
     Button newExpButton;
     Button existingExpButton;
+
+    Button guideButton;
+    Button logoutButton;
+
     Activity mSelf = this;
 
     @Override
@@ -30,7 +34,8 @@ public class HomeScreen extends ActionBarActivity {
         setContentView(R.layout.activity_home_screen);
 
         newExpButton = (Button) findViewById(R.id.new_experiment_button);
-        existingExpButton = (Button) findViewById(R.id.exisiting_experiment_button);
+        existingExpButton = (Button) findViewById(R.id.existing_experiment_button);
+        logoutButton = (Button) findViewById(R.id.logout_button);
 
         /*newExpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,6 +174,19 @@ public class HomeScreen extends ActionBarActivity {
                 builder.show();
             }
         });
+
+
+        logoutButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                MainActivity.currentUser = "";
+                
+                Intent intent = new Intent(mSelf, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -191,5 +209,11 @@ public class HomeScreen extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        // do nothing
     }
 }

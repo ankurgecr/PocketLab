@@ -9,22 +9,25 @@
     tools:context=".MainActivity"
     android:background="@drawable/home_screen_bckgrnd">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+    <TextView android:text="@string/hello_world"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text_view"
         android:textColor="#D9D3D3"/>
 
     <Button
-        android:layout_width="wrap_content"
+        style="@style/button_text"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/login_button"
+        android:textSize="20sp"
+        android:textColor="#6d6c6c"
         android:id="@+id/next_activity_button"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:backgroundTint="#e1e1e1"
-        android:textColor="#2D65B3"
         android:longClickable="false"
-        android:textColorHighlight="#d0caca" />
+        android:layout_marginTop="100dp"
+        android:background="@drawable/login_button"/>
 
     <EditText
         android:id="@+id/enter_username"
@@ -35,7 +38,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:hint="Username"
+        android:hint="@string/username_hint"
         android:textColorHint="#2D65B3"
         android:textColor="#FFFFFF"
         android:layout_alignParentStart="true" />
@@ -47,7 +50,8 @@
         android:layout_above="@+id/next_activity_button"
         android:inputType="textPassword"
         android:textColor="#FFFFFF"
-        android:hint="Password"
+        android:hint="@string/password_hint"
+        android:layout_marginBottom="50dp"
         android:textColorHint="#2D65B3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -55,22 +59,18 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:layout_width="wrap_content"
+        style="@style/button_text"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Create New User"
+        android:text="@string/new_user_button"
+        android:textSize="20sp"
+        android:textColor="#6d6c6c"
         android:id="@+id/make_new_user_button"
-        android:layout_below="@+id/next_activity_button"
-        android:layout_centerHorizontal="true"
-        android:textColor="#2D65B3"
         android:focusableInTouchMode="true"
-        android:backgroundTint="#FFE1E1E1" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/test_tube"
-        android:layout_above="@+id/enter_username"
+        android:background="@drawable/new_user_button"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/next_activity_button"
         android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>

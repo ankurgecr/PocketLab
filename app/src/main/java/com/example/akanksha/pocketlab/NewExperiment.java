@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
@@ -17,10 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.text.SpannableString;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -36,6 +35,10 @@ public class NewExperiment extends ActionBarActivity {
     Button savecsvButton;
     //Button accelButton;
     Button ambiButton;
+    Button homeButton;
+
+    Button viewSavedDataButton;
+
     Activity newExpSelf = this;
 
     @Override
@@ -49,6 +52,7 @@ public class NewExperiment extends ActionBarActivity {
         savecsvButton = (Button) findViewById(R.id.csv_button);
         //accelButton = (Button) findViewById(R.id.accel_button);
         ambiButton = (Button) findViewById(R.id.ambient_button);
+        homeButton = (Button) findViewById(R.id.home_button);
 
         temperatureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +156,14 @@ public class NewExperiment extends ActionBarActivity {
             }
         });
 
+        homeButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(newExpSelf, HomeScreen.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -248,5 +260,12 @@ public class NewExperiment extends ActionBarActivity {
         displaystring = new SpannableString(tempstr1);*/
 
         return displaystring;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(newExpSelf, HomeScreen.class);
+        startActivity(intent);
     }
 }

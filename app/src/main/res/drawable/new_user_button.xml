@@ -8,7 +8,9 @@
                 android:centerColor="#c8f8f7fa"
                 android:endColor="#c8bfbdc2"/>
 
-
+            <size
+                android:height="50dp"
+                android:width="50dp"/>
             <corners
                 android:radius="25dp"/>
 
@@ -24,6 +26,9 @@
                 android:centerColor="#f8f7fa"
                 android:endColor="#bfbdc2"/>
 
+            <size
+                android:height="50dp"
+                android:width="50dp"/>
             <corners
                 android:radius="25dp"/>
 

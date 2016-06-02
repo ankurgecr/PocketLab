@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -8,19 +8,49 @@
     android:weightSum="1">
 
     <Button
+        style="@style/button_text"
         android:background="@drawable/new_exp_button"
         android:id="@+id/new_experiment_button"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="New Experiment"
-        style="@style/button_text" />
+        android:text="@string/new_exp_title"
+        android:textColor="#6d6b6b"
+        android:layout_above="@+id/existing_experiment_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp" />
 
     <Button
+        style="@style/button_text"
         android:background="@drawable/existing_exp_button"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Existing Experiments"
-        android:id="@+id/exisiting_experiment_button"
-        style="@style/button_text"/>
+        android:text="@string/saved_sessions_title"
+        android:textColor="#6d6b6b"
+        android:id="@+id/existing_experiment_button"
+        android:layout_above="@+id/button2"
+        android:layout_centerHorizontal="true"/>
+    <Button
+        style="@style/button_text"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="@string/guide_button_title"
+        android:textColor="#6d6b6b"
+        android:id="@+id/button2"
+        android:background="@drawable/new_exp_button"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
-</LinearLayout>
+    <Button
+        style="@style/button_text"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/logout_button_title"
+        android:textColor="#ff0000"
+        android:id="@+id/logout_button"
+        android:background="@drawable/new_exp_button"
+        android:layout_marginBottom="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

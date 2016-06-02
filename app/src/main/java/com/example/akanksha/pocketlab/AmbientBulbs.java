@@ -11,7 +11,7 @@ public class AmbientBulbs extends PApplet {
     PFont font;
 
     int lumens = 1775;      //input lumens from sensor
-    int MAX_LUMENS = 2500;  //determines matrix size (sqrt(MAX_LUMENS),sqrt(MAX_LUMENS))
+    int MAX_LUMENS = 6400;  //determines matrix size (sqrt(MAX_LUMENS),sqrt(MAX_LUMENS))
     //matrix must always be a square value and a multiple of a 100
     //one bulb = 100 lumens
 
@@ -31,7 +31,7 @@ public class AmbientBulbs extends PApplet {
 
     public void settings()
     {
-        size(width-100,width-100);
+        size(width-50,width+100);
     }
 
     public void setup()
@@ -80,8 +80,16 @@ public class AmbientBulbs extends PApplet {
         }
         else
         {
-            startX = (width/m_size)+inc;
-            startY = (height/m_size)+inc;
+            if(m_size > 6)
+            {
+                startX = (width/m_size);
+                startY = (height/m_size);
+            }
+            else
+            {
+                startX = (width / m_size) + inc;
+                startY = (height / m_size) + inc;
+            }
         }
         emptyGrid(startX, startY);
     }
@@ -93,7 +101,8 @@ public class AmbientBulbs extends PApplet {
         //on = color(255,231,22,255-(40*i));
         textAlign(CENTER);
         fill(255);
-        text(lumens+" lumens",width/2,height/16);
+        textSize(75);
+        text(lumens + " lumens", width / 2, height / 16);
         if(lumens > 0)
         {
             if(lit_bulbs==1)
@@ -189,8 +198,7 @@ public class AmbientBulbs extends PApplet {
 
     void emptyGrid(int firstX, int firstY)
     {
-        int i = 0;
-        int j = 0;
+        int i, j;
         //color off;
         //off = color(255,255,255,50);
 
@@ -201,6 +209,62 @@ public class AmbientBulbs extends PApplet {
                 Bulb(firstX+(i*inc),firstY+(j*inc),radius,0);
             }//for
         }//for
+        drawScale(firstX);
     }//emptyGrid()
+
+    void drawScale(int firstX)
+    {
+        Bulb(firstX+(5*inc),height-(radius+5),radius,0);
+        textAlign(CENTER);
+        fill(255);
+        textSize(40);
+        text("0L", firstX + (5 * inc), height - 5);
+
+        Bulb(firstX + (4 * inc), height - (radius + 5), radius, 0);
+        Bulb(firstX + (4 * inc), height - (radius + 5), (radius / 5), 1);
+        textAlign(CENTER);
+        fill(255);
+        textSize(40);
+        text(">20L", firstX + (4 * inc), height - 5);
+
+        Bulb(firstX + (3 * inc), height - (radius + 5), radius, 0);
+        Bulb(firstX + (3 * inc), height - (radius + 5), (radius / 5), 1);
+        Bulb(firstX + (3 * inc), height - (radius + 5), 2 * (radius / 5), 1);
+        textAlign(CENTER);
+        fill(255);
+        textSize(40);
+        text(">40L", firstX + (3 * inc), height - 5);
+
+        Bulb(firstX + (2 * inc), height - (radius + 5), radius, 0);
+        Bulb(firstX + (2 * inc), height - (radius + 5), (radius / 5), 1);
+        Bulb(firstX + (2 * inc), height - (radius + 5), 2 * (radius / 5), 1);
+        Bulb(firstX + (2 * inc), height - (radius + 5), 3 * (radius / 5), 1);
+        textAlign(CENTER);
+        fill(255);
+        textSize(40);
+        text(">60L",firstX+(2*inc),height-5);
+
+        Bulb(firstX+(inc),height-(radius+5),radius,0);
+        Bulb(firstX+(inc),height-(radius+5),(radius/5),1);
+        Bulb(firstX+(inc),height-(radius+5),2*(radius/5),1);
+        Bulb(firstX+(inc),height-(radius+5),3*(radius/5),1);
+        Bulb(firstX+(inc),height-(radius+5),4*(radius/5),1);
+        textAlign(CENTER);
+        fill(255);
+        textSize(40);
+        text(">80L",firstX+(inc),height-5);
+
+        Bulb(firstX,height-(radius+5),radius,1);
+        Bulb(firstX,height-(radius+5),(radius/5),1);
+        Bulb(firstX,height-(radius+5),2*(radius/5),1);
+        Bulb(firstX,height-(radius+5),3*(radius/5),1);
+        Bulb(firstX,height-(radius+5),4*(radius/5),1);
+        textAlign(CENTER);
+        fill(255);
+        textSize(40);
+        text("100L",firstX,height-5);
+
+
+    }//drawScale()
 
 }
