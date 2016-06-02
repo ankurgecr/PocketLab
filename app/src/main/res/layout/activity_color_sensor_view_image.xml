@@ -47,7 +47,8 @@ android:layout_height="fill_parent" >
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_centerHorizontal="true"
-        android:textSize="11dp" />
+        android:textSize="11dp"
+        android:background="@drawable/new_data_button"/>
 
     <Button android:id="@+id/button_saveData"
         style="?android:attr/buttonStyleSmall"
@@ -59,7 +60,8 @@ android:layout_height="fill_parent" >
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        android:textSize="11dp" />
+        android:textSize="11dp"
+        android:background="@drawable/new_data_button"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -71,6 +73,7 @@ android:layout_height="fill_parent" >
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/button_newData"
-        android:layout_alignEnd="@+id/button_newData" />
+        android:layout_alignEnd="@+id/button_newData"
+        android:background="@drawable/lab_toggle_button"/>
 
 </RelativeLayout>

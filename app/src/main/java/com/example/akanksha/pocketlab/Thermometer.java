@@ -25,7 +25,8 @@ public class Thermometer extends PApplet {
     @Override
     public void settings()
     {
-        size(width-100, height-100);
+        size(1000, 1280);
+        //1000,1280
     }
 
     @Override
@@ -42,7 +43,7 @@ public class Thermometer extends PApplet {
         thermoScale();
         drawTempMarker();
 
-    }
+    }//setup()
 
     @Override
     public void draw()
@@ -65,7 +66,7 @@ public class Thermometer extends PApplet {
         j=0;
         displaydegree(degree);
         tapEvent();
-    }
+    }//draw()
 
     void tapEvent()
     {
@@ -99,16 +100,16 @@ public class Thermometer extends PApplet {
         noStroke();
         fill(255);
         rect(440, 225, 120, 700);
-        //rect(width/)
         noStroke();
-        fill(21,66,245);
+        fill(21, 66, 245);
         ellipse(500, 925, 225, 225);
+
     }//thermoScale()
 
     void temperature0()
     {
         noStroke();
-        fill(21,66,245);
+        fill(21, 66, 245);
         rect(440, 810, 120, 25);
     }//temperature0()
 
@@ -125,7 +126,7 @@ public class Thermometer extends PApplet {
         {
             strokeWeight(4);
             stroke(255);
-            line(440, 810 - (a * 100), 410, 810 - (a*100));
+            line(440, 810 - (a * 100), 410, 810 - (a * 100));
 
             textAlign(RIGHT);
             textSize(32);
@@ -159,25 +160,25 @@ public class Thermometer extends PApplet {
         if(units.equals("F"))
         {
             textAlign(RIGHT);
-            textSize(36);
+            textSize(60);
             fill(245,222,0);
             text("Fahrenheit",(width/3),height/3);
         }
         else if(units.equals("C"))
         {
             textAlign(RIGHT);
-            textSize(36);
+            textSize(60);
             fill(245,222,0);
             text("Celsius",(width/3),height/3);
         }
 
         textAlign(LEFT);
-        textSize(36);
+        textSize(40);
         fill(255);
         text(deg+" degrees",2*(width/3),height/3);
 
         textAlign(CENTER);
-        textSize(26);
+        textSize(44);
         fill(255);
         text("Tap to convert",(width/2),(height-(height/10)));
     }//displaydegree()

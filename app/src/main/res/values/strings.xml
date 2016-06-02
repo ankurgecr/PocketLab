@@ -43,4 +43,35 @@
     <string name="title_activity_display_exp_data">DisplayExpData</string>
     <string name="title_activity_variable_sensor">VariableSensorAct</string>
     <string name="title_activity_vari_sensor">VariSensor</string>
+
+    <string name="guide_page_welcome">Welcome to PocketLab!</string>
+    <string name="guide_page_welcome_content">This guide is here to help you get acquainted with the features and functionalities of this app. PocketLab is an application that allows you to perform scientific experiments on the go.</string>
+    <string name="guide_page_login_title">Let\'s Get Started</string>
+    <string name="guide_page_login_title_content">First, you need to create a new user account. Please store your username and password as PocketLab is currently still under development, and there is no easy way to restoring access to your account once credentials have been lost. So please, store them accordingly.Once you have created an account, the real fun begins!</string>
+    <string name="guide_page_home_title">Home Menu</string>
+    <string name="guide_page_home_title_content">At our home page, you will find everything you will need in your scientific journey. The menus include, New Experiment, Saved Sessions, Guide (This is where you are now!) and logout.</string>
+    <string name="guide_page_new_exp_title">How To Start A New Experiment</string>
+    <string name="guide_page_new_exp_title_info">To start a new experiment simply click on the "New Experiment" button. In this menu you will find the available sensors at your disposal, currently color, temperature, ambient light, and custom sensor option. You will also find the option to save your current experiment as a CSV (More on this later).</string>
+    <string name="guide_page_saved_sessions_title">Where To Find Old Experiments</string>
+    <string name="guide_page_saved_sessions_title_content">Click the "Saved Sessions" button to find all previous experiments, allowing you to pick up where you left off in any previous session.</string>
+    <string name="guide_page_sensors_title">Available Sensors</string>
+    <string name="guide_page_sensors_title_content">The following describes the current available sensors on our app.</string>
+    <string name="guide_page_color_sensor_title">Color</string>
+    <string name="guide_page_color_sensor_title_content">he color sensor utilizes a custom camera that allows you to take an image and create a field where you can select any pixels within the created frame and retrieve the RGB and LGB color value. Such feature is great for determining if your fruit is ripe enough for a delicious bite.</string>
+    <string name="guide_page_temp_sensor_title">Temperature</string>
+    <string name="guide_page_temp_sensor_title_content">Ever wonder what the current temperature is in your environment? Simply select this sensor and find out. The sensor also has cool graphical representation of your temperature value.</string>
+    <string name="guide_page_ambient_sensor_title">Ambient Light</string>
+    <string name="guide_page_ambient_sensor_title_content">The ambient light allows you retrieve the amount of lumens in your room or outdoors. The scale is between 3 to 55000 lumens.</string>
+    <string name="guide_page_var_sensor_title">Variable Sensor</string>
+    <string name="guide_page_var_sensor_title_content">Have another analog tester that you would like to utilize? Simply select the variable sensor and configure for your use. Mostly all analog pins utilize three pins, voltage, ground, and data output. The custom sensor feature allows you to select which pins on the IOIO-OTG to set to which variable.</string>
+    <string name="guide_page_new_data_title">How is the data collected?</string>
+    <string name="guide_page_new_data_title_content">PocketLab sensors return a 30 millisecond average of the selected sensor data. For a new data point, simply select “New Data” for the new average.</string>
+    <string name="guide_page_save_data_title">Where does all this data go?</string>
+    <string name="guide_page_save_data_title_contet">Save data simply saves the current data value temporarily. For long term storage, see Save to CSV.</string>
+    <string name="guide_page_save_csv_title">Putting it onto the Computer</string>
+    <string name="guide_page_save_csv_title_content">This features takes your saved data and permanently saves them to a CSV file in your local storage, such as: Local/android/data/data/com.akanksha.pocketlab.</string>
+    <string name="guide_page_logout_title">When you\'re ready to be done...</string>
+    <string name="guide_page_logout_title_content">Just hit the logout button on the main menu! It is sad the fun must stop, but thank you for using PocketLab! We look forward to  seeing you during your next experiment.</string>
+    <string name="guide_page_additional_help_title"> Additional Help</string>
+    <string name="guide_page_additional_help_title_content">For more in-detailed guidance of PocketLab, please see the official PocketLab user manual.</string>
 </resources>
