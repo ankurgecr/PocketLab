@@ -50,7 +50,9 @@ public class AmbientSensor extends AbstractIOIOActivity
         newDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                measureLumens = true;
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
             }
         });
         saveDataButton = (Button) findViewById(R.id.save_data_button);
