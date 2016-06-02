@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
@@ -19,9 +20,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.text.SpannableString;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -191,16 +197,65 @@ public class NewExperiment extends ActionBarActivity {
         String filename = MainActivity.currentUser + reportDate + ".csv";
         //File myfile = new File(path,filename);
 
-        try {
-            FileOutputStream outputstream = openFileOutput("hello", Context.MODE_WORLD_WRITEABLE);
+        /*try {
+            FileOutputStream outputstream = openFileOutput("hello", Context.MODE_WORLD_READABLE);
             outputstream.write("hi".getBytes());
             outputstream.close();
             Log.d("DEBUG", "Saving2");
         } catch (Exception e) {
             e.printStackTrace();
             Log.d("DEBUG", "not saving");
+        }*/
 
+        String imageFileName = "PocketLab_" + reportDate + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+
+        try {
+            File myfile  = File.createTempFile(
+                    imageFileName,  /* prefix */
+                    ".csv",         /* suffix */
+                    storageDir      /* directory */
+
+            );
+            FileWriter writer = new FileWriter(myfile);
+            writer.write(dataval);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        /*Toast.makeText(context.getApplicationContext(),
+                "Report successfully saved to: " + outputFile.getAbsolutePath(),
+                Toast.LENGTH_LONG).show();*/
+
+        /*String ret = "";
+
+        try {
+            InputStream inputStream = openFileInput("hello");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("DEBUG", "File not found: " + e.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Log.d("DEBUG", ret);*/
+
+
     }
 
     public String csvstring(ArrayList<String> datafromsql){ //get the string to save to a csv
