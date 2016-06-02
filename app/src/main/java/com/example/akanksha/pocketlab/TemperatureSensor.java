@@ -64,6 +64,10 @@ public class TemperatureSensor extends AbstractIOIOActivity {
         newDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isMeasuring())
+                {
+                    toast("Please wait for measurement to complete.");
+                }
                 measureTemp = true;
             }
         });
@@ -71,7 +75,14 @@ public class TemperatureSensor extends AbstractIOIOActivity {
         saveDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logTemp();
+                if(isMeasuring())
+                {
+                    toast("Please wait for measurement to complete.");
+                }
+                else
+                {
+                    logTemp();
+                }
             }
         });
 
@@ -244,6 +255,19 @@ public class TemperatureSensor extends AbstractIOIOActivity {
     private float FtoC(float f)
     {
         return 5f/9f*(f-32);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if(isMeasuring())
+        {
+            toast("Please wait for measurement to complete.");
+        }
+        else
+        {
+            super.onBackPressed();
+        }
     }
 
 } // class TemperatureSensor
