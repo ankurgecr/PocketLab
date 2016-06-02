@@ -256,4 +256,11 @@ public class NewExperiment extends ActionBarActivity {
 
         return displaystring;
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(newExpSelf, HomeScreen.class);
+        startActivity(intent);
+    }
 }
